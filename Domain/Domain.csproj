@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="DependencyInjection.cs~RF6f2b59.TMP" />
+  </ItemGroup>
+
 </Project>
