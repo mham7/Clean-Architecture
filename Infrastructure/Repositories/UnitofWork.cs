@@ -38,9 +38,9 @@ namespace Infrastructure.UnitOfWork
             _appcontext.Dispose();
         }
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            _appcontext.SaveChanges();
+            await _appcontext.SaveChangesAsync();
         }
     }
 }

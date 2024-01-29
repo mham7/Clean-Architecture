@@ -15,33 +15,33 @@ namespace Contouring_App.Application.Services
             _gen = gen;
             _unit = unit;
         }
-        public void Add(Division division)
+        public async Task Add(Division division)
         {
-            _gen.Add(division);
+           await _gen.Add(division);
         }
 
-        public void Delete(Division division)
+        public async Task Delete(Division division)
         {
-            _gen.Delete(division);
+           await _gen.Delete(division);
         }
 
-        public List<Divlist> GetDivisions(int div_id)
+        public async Task<List<Divlist>> GetDivisionsAsync(int div_id)
         {
-           return _unit.divs.Get_Divisions(div_id);
+           return await _unit.divs.Get_Divisions(div_id);
         }
-        public IEnumerable<Division> GetAll()
+        public async Task<IEnumerable<Division>> GetAll()
         {
-            return _gen.GetAll();
-        }
-
-        public Division GetById(int id)
-        {
-            return _gen.GetById(id);
+            return await _gen.GetAll();
         }
 
-        public void Update(Division division)
+        public async Task<Division> GetByIdAsync(int id)
         {
-            _gen.Update(division);
+            return await _gen.GetById(id);
+        }
+
+        public async Task Update(Division division)
+        {
+           await _gen.Update(division);
         }
     }
 }

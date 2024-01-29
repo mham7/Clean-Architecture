@@ -15,15 +15,16 @@ namespace Infrastructure.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public Usercs CheckAuthenticate(Userdto cred)
+        public async Task<Usercs> CheckAuthenticate(Userdto cred)
         {
             HashSet<Usercs> users= new HashSet<Usercs>();
 
             IQueryable<Usercs> cs = _appDbContext.Users.Where(user => user.Email == cred.email);
 
-            Usercs found_user = cs.First();
+            Usercs found_user = await cs.FirstAsync();
 
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(cred.password, found_user.Password);
+
 
             if (found_user != null && isPasswordValid==true)
             {
@@ -31,7 +32,7 @@ namespace Infrastructure.Repositories
             }
             else
             {
-                return null;
+                throw new InvalidOperationException("User not found or invalid password.");
             }
         }
 

@@ -14,30 +14,30 @@ namespace Contouring_App.Application.Services
             _unit = unit;
             _gen = gen;
         }
-        public void Add(Manager manager)
+        public async Task Add(Manager manager)
         {
-            _gen.Add(manager);
+           await _gen.Add(manager);
         }
 
-        public void Delete(Manager manager)
+        public async Task Delete(Manager manager)
         {
-            _gen.Delete(manager);
+           await _gen.Delete(manager);
         }
 
-        public IEnumerable<Manager> GetAll()
+        public async Task<IEnumerable<Manager>> GetAllAsync()
         {
 
-            return _gen.GetAll();
+            return await _gen.GetAll();
         }
 
-        public Manager GetById(int id)
+        public async Task<Manager> GetById(int id)
         {
-            return _gen.GetById(id);
+            return await _gen.GetById(id);
         }
 
-        public void Update(Manager manager)
+        public async Task Update(Manager manager)
         {
-             _gen.Update(manager);
+            await _gen.Update(manager);
         }
     }
 }

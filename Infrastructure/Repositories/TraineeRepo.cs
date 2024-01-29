@@ -13,10 +13,10 @@ namespace Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
-        public List<Trainee> GetTraineeswithMinWage(int salary)
+        public async Task<List<Trainee>> GetTraineeswithMinWage(int salary)
         {
           IQueryable<Trainee> s= _dbContext.Trainee.Where(s=>s.Salary>salary);
-            return s.ToList();
+            return await s.ToListAsync();
         }
     }
 }

@@ -6,10 +6,10 @@ namespace Domain.Interfaces
     public interface IManagerService
     {
 
-        public Manager GetById(int id);
-        public IEnumerable<Manager> GetAll();
-        public void Add(Manager manager);
-        public void Update(Manager manager);
-        public void Delete(Manager manager);
+        public Task<Manager> GetById(int id);
+        public Task<IEnumerable<Manager>> GetAllAsync();
+        public Task Add(Manager manager);
+        public Task Update(Manager manager);
+        public Task Delete(Manager manager);
     }
 }

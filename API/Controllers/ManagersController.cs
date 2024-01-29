@@ -19,13 +19,13 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Manager>>> GetAllManagers()
         {
-            if (_mangservice.GetAll() == null)
+            if (await _mangservice.GetAllAsync() == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(_mangservice.GetAll());
+                return Ok(await _mangservice.GetAllAsync());
             }
         }
 
@@ -39,7 +39,7 @@ namespace Contouring_App.Presentation.Controllers
             }
             else
             {
-                _mangservice.Add(div);
+               await _mangservice.Add(div);
                 return Ok(div);
             }
         }
@@ -50,8 +50,8 @@ namespace Contouring_App.Presentation.Controllers
         {
             if (id != 0)
             {
-                Manager a = _mangservice.GetById(id);
-                _mangservice.Delete(a);
+                Manager a = await _mangservice.GetById(id);
+                await _mangservice.Delete(a);
                 return Ok(a);
             }
             else
@@ -80,7 +80,7 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Manager>> GetManager(int id)
         {
-            Manager a = _mangservice.GetById(id);
+            Manager a = await _mangservice.GetById(id);
             if (a == null)
             {
                 return NotFound(id);

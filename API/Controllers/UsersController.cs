@@ -18,13 +18,13 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllUsercss()
         {
-            if (_userService.GetAll() == null)
+            if (await _userService.GetAll() == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(_userService.GetAll());
+                return Ok(await _userService.GetAll());
             }
         }
 
@@ -40,7 +40,7 @@ namespace Contouring_App.Presentation.Controllers
             }
             else
             {
-                return Ok(_userService.Login(div));
+                return Ok( await _userService.Login(div));
 
             }
         }
@@ -56,7 +56,7 @@ namespace Contouring_App.Presentation.Controllers
             }
             else
             {
-               return Ok (_userService.Register(div));
+               return Ok (await _userService.Register(div));
                 
             }
         }
@@ -67,8 +67,8 @@ namespace Contouring_App.Presentation.Controllers
         {
             if (id != 0)
             {
-                Usercs a = _userService.GetById(id);
-                _userService.Delete(a);
+                Usercs a = await _userService.GetById(id);
+               await _userService.Delete(a);
                 return Ok(a);
             }
             else
@@ -84,7 +84,7 @@ namespace Contouring_App.Presentation.Controllers
         {
             try
             {
-                _userService.Update(mang);
+               await _userService.Update(mang);
                 return Ok(mang);
             }
             catch (Exception ex)
@@ -98,7 +98,7 @@ namespace Contouring_App.Presentation.Controllers
         [Authorize]
         public async Task<ActionResult<Usercs>> GetUsercs(int id)
         {
-            Usercs a = _userService.GetById(id);
+            Usercs a = await _userService.GetById(id);
             if (a == null)
             {
                 return NotFound(id);

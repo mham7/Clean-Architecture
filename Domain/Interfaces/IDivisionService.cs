@@ -6,11 +6,13 @@ namespace Domain.Interfaces
 {
     public interface IDivisionService
     {
-        public Division GetById(int id);
-        public IEnumerable<Division> GetAll();
-        public void Add(Division division);
-        public void Update(Division division);
-        public void Delete(Division division);
-        public List<Divlist> GetDivisions(int div_id);
+        Task Delete(Division division);
+        Task Add(Division division);
+        Task<List<Divlist>> GetDivisionsAsync(int div_id);
+        Task<IEnumerable<Division>> GetAll();
+        Task<Division> GetByIdAsync(int id);
+        Task Update(Division division);
+
+
     }
 }

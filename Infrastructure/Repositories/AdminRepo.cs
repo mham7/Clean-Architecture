@@ -10,9 +10,9 @@ namespace Infrastructure.Repositories
         public AdminRepo(AppDbContext context) {
             _context= context;
         }
-        public List<Admin> IsSalaryGreater(int count) 
+        public async Task<List<Admin>> IsSalaryGreater(int count) 
         {
-            return _context.Admin.Where(admins => admins.Salary >count).ToList();
+            return await _context.Admin.Where(admins => admins.Salary >count).ToListAsync();
         }
     }
 }

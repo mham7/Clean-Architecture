@@ -17,9 +17,9 @@ namespace Infrastructure.Repositories
             _appContext = appcontext;
         }
 
-        public T GetById(int id)
+        public async Task<T> GetById(int id)
         {
-            T entity = _appContext.Set<T>().Find(id);
+            T entity = await  _appContext.Set<T>().FindAsync(id);
             if (entity == null)
             {
                 throw new Exception("Data is nulll");
@@ -29,9 +29,9 @@ namespace Infrastructure.Repositories
 
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            IEnumerable<T> all_data = _appContext.Set<T>().ToList();
+            IEnumerable<T> all_data = await _appContext.Set<T>().ToListAsync();
             if (all_data == null)
             {
                 throw new Exception("Data is nulll");
@@ -40,26 +40,26 @@ namespace Infrastructure.Repositories
 
         }
 
-        public void Add(T entity)
+        public async Task Add(T entity)
         {
-            _appContext.Set<T>().Add(entity);
-            SaveChanges();
+            await _appContext.Set<T>().AddAsync(entity);
+            await SaveChanges();
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
-            _appContext.Set<T>().Update(entity);
-            SaveChanges();
+             _appContext.Set<T>().Update(entity);
+            await SaveChanges();
         }
 
-        public void Delete(T entity)
+        public async Task Delete(T entity)
         {
             _appContext.Set<T>().Remove(entity);
-            SaveChanges();
+           await SaveChanges();
         }
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            _appContext.SaveChanges();
+           await _appContext.SaveChangesAsync();
         }
     }
 

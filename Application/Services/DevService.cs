@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Interfaces.Repositories;
+using System.Runtime.CompilerServices;
 
 namespace Contouring_App.Application.Services
 {
@@ -17,34 +18,34 @@ namespace Contouring_App.Application.Services
             _gen = gen;
         }
 
-        public List<Dev> getstacklist(string ts)
+        public async Task<List<Dev>> getStacklist(string ts)
         {
-           return _unit.devs.GetStackList(ts);
+           return await _unit.devs.GetStackList(ts);
         }
-        public void Add(Dev dev)
+        public async Task Add(Dev dev)
         {
-            _gen.Add(dev);
-        }
-
-        public void Delete(Dev dev)
-        {
-            _gen.Delete(dev);
+            await _gen.Add(dev);
         }
 
-        public IEnumerable<Dev> GetAll()
+        public async Task Delete(Dev dev)
         {
-            return _gen.GetAll();
+            await _gen.Delete(dev);
         }
 
-        public Dev GetById(int id)
+        public async Task<IEnumerable<Dev>> GetAll()
         {
-            Dev dev = _gen.GetById(id);
+            return await _gen.GetAll();
+        }
+
+        public async Task<Dev> GetById(int id)
+        {
+            Dev dev = await _gen.GetById(id);
             return dev;
         }
 
-        public void Update(Dev dev)
+        public async Task Update(Dev dev)
         {
-            _gen.Update(dev);
+            await _gen.Update(dev);
         }
     }
 }

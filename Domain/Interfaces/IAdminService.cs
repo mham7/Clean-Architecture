@@ -7,12 +7,12 @@ namespace Domain.Interfaces
     public interface IAdminService
     {
 
-        public Admin GetById(int id);
-        public IEnumerable<Admin> GetAll();
-        public void Add(Admin admin);
-        public void Update(Admin admin);
-        public void Delete(Admin admin);
-        public List<Admin> IsSalaryGreater(int salary);
+        public Task<Admin> GetById(int id);
+        public Task<IEnumerable<Admin>> GetAll();
+        public Task Add(Admin admin);
+        public Task Update(Admin admin);
+        public Task Delete(Admin admin);
+        public Task<List<Admin>> IsSalaryGreater(int salary);
 
 
     }

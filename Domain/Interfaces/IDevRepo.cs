@@ -4,6 +4,6 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IDevRepo
     {
-        public List<Dev> GetStackList(string techstack);
+        public Task<List<Dev>> GetStackList(string techstack);
     }
 }

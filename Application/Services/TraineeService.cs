@@ -2,6 +2,7 @@
 using Domain.Entities.Dtos;
 using Domain.Interfaces;
 using Domain.Interfaces.Repositories;
+
 namespace Contouring_App.Application.Services
 {
     public class TraineeService : ITraineeService
@@ -13,34 +14,34 @@ namespace Contouring_App.Application.Services
             _unit = unit;
             _gen = gen;
         }
-        public void Add(Trainee trainee)
+        public async Task Add(Trainee trainee)
         {
-            _gen.Add(trainee);
+           await _gen.Add(trainee);
         }
 
-        public void Delete(Trainee trainee)
+        public async Task Delete(Trainee trainee)
         {
-            _gen.Delete(trainee);
+            await _gen.Delete(trainee);
         }
 
-        public List<Trainee> GetMinWage(int salary)
+        public async Task<List<Trainee>> GetMinWageAsync(int salary)
         {
-            return _unit.trainees.GetTraineeswithMinWage(salary);
+            return await _unit.trainees.GetTraineeswithMinWage(salary);
         }
 
-        public IEnumerable<Trainee> GetAll()
+        public async Task<IEnumerable<Trainee>> GetAllAsync()
         {
-            return _gen.GetAll();
+            return await _gen.GetAll();
         }
 
-        public Trainee GetById(int id)
+        public async Task<Trainee> GetByIdAsync(int id)
         {
-            return _gen.GetById(id);
+            return await _gen.GetById(id);
         }
 
-        public void Update(Trainee trainee)
+        public async Task Update(Trainee trainee)
         {
-             _gen.Update(trainee);
+             await _gen.Update(trainee);
         }
     }
 }

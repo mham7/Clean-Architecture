@@ -5,7 +5,7 @@ namespace Domain.Interfaces.Repositories
 {
     public interface ITraineeRepo
     {
-        public List<Trainee> GetTraineeswithMinWage(int salary);
+        public Task<List<Trainee>> GetTraineeswithMinWage(int salary);
 
 
     }

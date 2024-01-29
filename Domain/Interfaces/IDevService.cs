@@ -3,11 +3,11 @@ namespace Domain.Interfaces
 {
     public interface IDevService
     {
-        public Dev GetById(int id);
-        public IEnumerable<Dev> GetAll();
-        public List<Dev> getstacklist(string ts);
-        public void Add(Dev dev);
-        public void Update(Dev dev);
-        public void Delete(Dev dev);
+        Task<Dev> GetById(int id);
+        Task<IEnumerable<Dev>> GetAll();
+        Task<List<Dev>> getStacklist(string ts);
+        Task Add(Dev dev);
+        Task Update(Dev dev);
+        Task Delete(Dev dev);
     }
 }

@@ -4,6 +4,6 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IAdminRepo
     {
-        public List<Admin> IsSalaryGreater(int count);
+        public Task<List<Admin>> IsSalaryGreater(int count);
     }
 }

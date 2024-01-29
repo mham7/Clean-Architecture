@@ -20,13 +20,13 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Admin>>> GetAllAdmins()
         {
-            if (_adminService.GetAll() == null)
+            if (await _adminService.GetAll() == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(_adminService.GetAll());
+                return Ok(await _adminService.GetAll());
             }
         }
 
@@ -40,7 +40,7 @@ namespace Contouring_App.Presentation.Controllers
             }
             else
             {
-                _adminService.Add(admin);
+                await _adminService.Add(admin);
                 return Ok(admin);
             }
         }
@@ -51,8 +51,8 @@ namespace Contouring_App.Presentation.Controllers
         {
             if (id != 0)
             {
-                Admin a = _adminService.GetById(id);
-                _adminService.Delete(a);
+                Admin a = await _adminService.GetById(id);
+                await _adminService.Delete(a);
                 return Ok(a);
             }
             else
@@ -81,7 +81,7 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Admin>> GetAdmin(int id)
         {
-            Admin a= _adminService.GetById(id);
+            Admin a= await _adminService.GetById(id);
             if (a == null)
             {
                 return NotFound(id);

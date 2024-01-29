@@ -6,11 +6,11 @@ namespace Domain.Interfaces
     public interface ITraineeService
     {
 
-        public Trainee GetById(int id);
-        public IEnumerable<Trainee> GetAll();
-        public void Add(Trainee trainee);
-        public void Update(Trainee trainee);
-        public void Delete(Trainee trainee);
-        public List<Trainee> GetMinWage(int salary);
+        public Task<Trainee> GetByIdAsync(int id);
+        public Task<IEnumerable<Trainee>> GetAllAsync();
+        public Task Add(Trainee trainee);
+        public Task Update(Trainee trainee);
+        public Task Delete(Trainee trainee);
+        public Task<List<Trainee>> GetMinWageAsync(int salary);
     }
 }

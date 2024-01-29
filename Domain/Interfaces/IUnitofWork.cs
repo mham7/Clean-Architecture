@@ -1,4 +1,5 @@
 ﻿using Domain.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Interfaces.Repositories
@@ -11,7 +12,7 @@ namespace Domain.Interfaces.Repositories
         ITraineeRepo trainees { get; }
         IDivisionRepo divs { get; }
         IUserRepo users { get; }
-
-        void SaveChanges();
+        Task SaveChanges();
+        
     }
 }

@@ -21,13 +21,13 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Trainee>>> GetAllTrainees()
         {
-            if (_traineeService.GetAll() == null)
+            if (await _traineeService.GetAllAsync() == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(_traineeService.GetAll());
+                return Ok(await _traineeService.GetAllAsync());
             }
         
         }
@@ -36,7 +36,7 @@ namespace Contouring_App.Presentation.Controllers
 
         public async Task<ActionResult<List<Trainee>>> GetMinSalary(int salary)
         {
-            return _traineeService.GetMinWage(salary);
+            return await _traineeService.GetMinWageAsync(salary);
         }
 
         [HttpPost("Add")]
@@ -49,7 +49,7 @@ namespace Contouring_App.Presentation.Controllers
             }
             else
             {
-                _traineeService.Add(div);
+               await _traineeService.Add(div);
                 return Ok(div);
             }
         }
@@ -60,8 +60,8 @@ namespace Contouring_App.Presentation.Controllers
         {
             if (id != 0)
             {
-                Trainee a = _traineeService.GetById(id);
-                _traineeService.Delete(a);
+                Trainee a = await _traineeService.GetByIdAsync(id);
+                await _traineeService.Delete(a);
                 return Ok(a);
             }
             else
@@ -90,7 +90,7 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Trainee>> GetTrainee(int id)
         {
-            Trainee a = _traineeService.GetById(id);
+            Trainee a = await _traineeService.GetByIdAsync(id);
             if (a == null)
             {
                 return NotFound(id);

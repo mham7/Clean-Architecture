@@ -13,36 +13,36 @@ namespace Contouring_App.Application.Services
             _unit= unit;
             _gen= gen;
         }
-        public void Add(Admin admin)
+        public async Task Add(Admin admin)
         {
-            _gen.Add(admin);    
+           await _gen.Add(admin);    
         }
 
-        public void Delete(Admin admin)
+        public async Task Delete(Admin admin)
         {
-            _gen.Delete(admin);
+            await _gen.Delete(admin);
         }
 
-        public IEnumerable<Admin> GetAll()
+        public async Task<IEnumerable<Admin>> GetAll()
         {
-           return _gen.GetAll();
+           return await _gen.GetAll();
         }
 
-        public  Admin GetById(int id)
+        public async Task<Admin> GetById(int id)
         {
-            Admin admin = _gen.GetById(id);
+            Admin admin = await _gen.GetById(id);
             return admin;
         }
 
-        public List<Admin> IsSalaryGreater(int salary)
+        public async Task<List<Admin>> IsSalaryGreater(int salary)
         {
-            return _unit.admins.IsSalaryGreater(salary);
+            return await _unit.admins.IsSalaryGreater(salary);
 
         }
 
-        public void Update(Admin admin)
+        public async Task Update(Admin admin)
         {
-            _gen.Update(admin);
+           await _gen.Update(admin);
         }
     }
 }
