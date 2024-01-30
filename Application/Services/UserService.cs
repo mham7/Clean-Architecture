@@ -46,7 +46,7 @@ namespace Application.Services
 
                 return "Not Authenicated";
             }
-            return Authenticator.tokenization(authuser,_config);
+            return Authenticator.Tokenization(authuser,_config);
 
         }
 

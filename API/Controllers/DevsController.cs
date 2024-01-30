@@ -10,14 +10,10 @@ namespace Contouring_App.Presentation.Controllers
 {
     [Route("api/[controller]"),Authorize]
     [ApiController]
-    public class DevsController : ControllerBase
+    public class DevsController(IDevService devService) : ControllerBase
     {
 
-        private readonly IDevService _devService;
-        public DevsController(IDevService devService)
-        {
-            _devService = devService;
-        }
+        private readonly IDevService _devService = devService;
 
         [ResponseCache(Duration = 60 * 60)]
         [HttpGet("GetAll")]

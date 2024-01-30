@@ -10,13 +10,9 @@ namespace Contouring_App.Presentation.Controllers
 {
     [Route("api/[controller]"),Authorize]
     [ApiController]
-    public class DivisionController : ControllerBase
+    public class DivisionController(IDivisionService divisionService) : ControllerBase
     {
-        private readonly IDivisionService _divisonService;
-        public DivisionController(IDivisionService divisionService)
-        {
-            _divisonService = divisionService;
-        }
+        private readonly IDivisionService _divisonService = divisionService;
 
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Division>>> GetAllDivs()

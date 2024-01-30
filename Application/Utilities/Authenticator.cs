@@ -18,7 +18,7 @@ namespace Application.Utilities
 
     
        
-        public static string tokenization(Usercs user, IConfiguration _config)
+        public static string Tokenization(Usercs user, IConfiguration _config)
         {
 
             var config = _config.GetSection("Jwt");

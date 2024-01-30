@@ -8,36 +8,20 @@ using Infrastructure.Context;
 namespace Infrastructure.Repositories
 
 {
-    public class GenericRepo<T> : IGenericRepo<T> where T : class
+    public class GenericRepo<T>(AppDbContext appcontext) : IGenericRepo<T> where T : class
     {
-        private readonly AppDbContext _appContext;
-
-        public GenericRepo(AppDbContext appcontext)
-        {
-            _appContext = appcontext;
-        }
+        private readonly AppDbContext _appContext = appcontext;
 
         public async Task<T> GetById(int id)
         {
             T entity = await  _appContext.Set<T>().FindAsync(id);
-            if (entity == null)
-            {
-                throw new Exception("Data is nulll");
-            }
-
-            return entity;
-
+            return entity ?? throw new Exception("Data is nulll");
         }
 
         public async Task<IEnumerable<T>> GetAll()
         {
             IEnumerable<T> all_data = await _appContext.Set<T>().ToListAsync();
-            if (all_data == null)
-            {
-                throw new Exception("Data is nulll");
-            }
-            return all_data;
-
+            return all_data ?? throw new Exception("Data is nulll");
         }
 
         public async Task Add(T entity)

@@ -8,12 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Contouring_App.Presentation.Controllers
 {
     [Route("api/[controller]"), Authorize]
-    public class UsersController : ControllerBase
+    public class UsersController(IUserService userService) : ControllerBase
     {
-        private readonly IUserService _userService;
-        public UsersController(IUserService userService) { _userService = userService; }
-
-      
+        private readonly IUserService _userService = userService;
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllUsercss()

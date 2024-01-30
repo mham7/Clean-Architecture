@@ -1,6 +1,7 @@
 using Application;
 using Application.Services;
 using Contouring_App.Application.Services;
+using Microsoft.Extensions.Configuration;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces;
 using Infrastructure;
@@ -12,6 +13,9 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using Infrastructure.UnitOfWork;
 using Swashbuckle.AspNetCore.Filters;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -35,6 +39,15 @@ builder.Services.AddScoped<IDivisionService, DivisionService>();
 builder.Services.AddScoped<IDivisionService, DivisionService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Logging.AddRinLogger(); 
+builder.Services.AddRin();
+
+IConfiguration config = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json")
+    .Build();
+var Config = config.GetSection("Jwt");
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Key"]!));
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -47,9 +60,9 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = "https://localhost:44309/", // Replace with your issuer
-        ValidAudience = "https://localhost:44309/", // Replace with your audience
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_base64_encoded_secret_keysdfagasgasgasgasgasgagasgasgsagsa")) // Replace with your key
+        ValidIssuer = Config["Issuer"],
+        ValidAudience = Config["Audience"],
+        IssuerSigningKey = key
     };
 });
 
@@ -76,8 +89,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseRin();
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseRinDiagnosticsHandler();
 }
 
 app.UseHttpsRedirection();

@@ -10,13 +10,9 @@ namespace Contouring_App.Presentation.Controllers
 {
     [Route("api/[controller]"), Authorize]
     [ApiController]
-    public class TraineesController : ControllerBase
+    public class TraineesController(ITraineeService traineeService) : ControllerBase
     {
-        private readonly ITraineeService _traineeService;
-        public TraineesController(ITraineeService traineeService)
-        {
-            _traineeService = traineeService;
-        }
+        private readonly ITraineeService _traineeService = traineeService;
 
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Trainee>>> GetAllTrainees()

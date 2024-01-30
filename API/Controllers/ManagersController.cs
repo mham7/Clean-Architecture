@@ -9,12 +9,9 @@ namespace Contouring_App.Presentation.Controllers
 {
     [Route("api/[controller]"),Authorize]
     [ApiController]
-    public class ManagersController : ControllerBase
+    public class ManagersController(IManagerService managerService) : ControllerBase
     {
-        private readonly IManagerService _mangservice;
-        public ManagersController(IManagerService managerService) {
-        _mangservice=managerService;
-        }
+        private readonly IManagerService _mangservice = managerService;
 
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Manager>>> GetAllManagers()
