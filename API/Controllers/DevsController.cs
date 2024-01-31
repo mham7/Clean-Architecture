@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces;
+using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +15,7 @@ namespace Contouring_App.Presentation.Controllers
 
         private readonly IDevService _devService = devService;
 
-        [ResponseCache(Duration = 60 * 60)]
+    
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Dev>>> GetAllDevs()
         {

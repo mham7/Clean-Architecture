@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces.Repositories;
 using Infrastructure.Context;
+using Domain.Interfaces.Repos;
 
 namespace Infrastructure.Repositories
 

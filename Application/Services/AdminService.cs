@@ -1,36 +1,36 @@
 ﻿using Domain.Entities;
-using Domain.Interfaces;
+using Domain.Interfaces.Repos;
 using Domain.Interfaces.Repositories;
+using Domain.Interfaces.Services;
 namespace Contouring_App.Application.Services
 {
     public class AdminService : IAdminService
     {
         private readonly IUnitofWork _unit;
-        private readonly IGenericRepo<Admin> _gen;
+        
 
-        public AdminService(IGenericRepo<Admin> gen,IUnitofWork unit)
+        public AdminService(IUnitofWork unit)
         {
             _unit= unit;
-            _gen= gen;
         }
         public async Task Add(Admin admin)
         {
-           await _gen.Add(admin);    
+           await _unit.admins.Add(admin);    
         }
 
         public async Task Delete(Admin admin)
         {
-            await _gen.Delete(admin);
+            await _unit.admins.Delete(admin);
         }
 
         public async Task<IEnumerable<Admin>> GetAll()
         {
-           return await _gen.GetAll();
+           return await _unit.admins.GetAll();
         }
 
         public async Task<Admin> GetById(int id)
         {
-            Admin admin = await _gen.GetById(id);
+            Admin admin = await _unit.admins.GetById(id);
             return admin;
         }
 
@@ -42,7 +42,7 @@ namespace Contouring_App.Application.Services
 
         public async Task Update(Admin admin)
         {
-           await _gen.Update(admin);
+           await _unit.admins.Update(admin);
         }
     }
 }

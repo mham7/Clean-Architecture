@@ -3,7 +3,6 @@ using Application.Services;
 using Contouring_App.Application.Services;
 using Microsoft.Extensions.Configuration;
 using Domain.Interfaces.Repositories;
-using Domain.Interfaces;
 using Infrastructure;
 using Infrastructure.Context;
 using Infrastructure.Repositories;
@@ -15,17 +14,18 @@ using Infrastructure.UnitOfWork;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Domain.Interfaces.Services;
+using Domain.Interfaces.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
+
 builder.Services.AddScoped<IAdminRepo, AdminRepo>();
+builder.Services.AddScoped<IManagerRepo, ManagerRepo>();
 builder.Services.AddScoped<ITraineeRepo, TraineeRepo>();
 builder.Services.AddScoped<IDivisionRepo, DivisionRepo>();
-builder.Services.AddScoped<ITraineeRepo, TraineeRepo>();
-builder.Services.AddScoped<IManagerRepo, ManagerRepo>();
 builder.Services.AddScoped<IDevRepo, DevRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 // Unit of Work
@@ -35,7 +35,6 @@ builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IDevService, DevService>();
 builder.Services.AddScoped<IManagerService, ManagerService>();
 builder.Services.AddScoped<ITraineeService, TraineeService>();
-builder.Services.AddScoped<IDivisionService, DivisionService>();
 builder.Services.AddScoped<IDivisionService, DivisionService>();
 builder.Services.AddScoped<IUserService, UserService>();
 

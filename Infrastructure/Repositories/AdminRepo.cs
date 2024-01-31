@@ -1,13 +1,14 @@
 ﻿using Domain.Entities;
-using Domain.Interfaces.Repositories;
+using Domain.Interfaces.Repos;
 using Infrastructure.Context;
 
 namespace Infrastructure.Repositories
 {
-    public class AdminRepo : IAdminRepo
+    public class AdminRepo : GenericRepo<Admin>, IAdminRepo
     {
         private readonly AppDbContext _context;
-        public AdminRepo(AppDbContext context) {
+        public AdminRepo(AppDbContext context) :base(context) 
+        {
             _context= context;
         }
         public async Task<List<Admin>> IsSalaryGreater(int count) 

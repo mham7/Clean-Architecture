@@ -1,7 +1,8 @@
 ﻿
 using Domain.Entities;
-using Domain.Interfaces;
+using Domain.Interfaces.Repos;
 using Domain.Interfaces.Repositories;
+using Domain.Interfaces.Services;
 using System.Runtime.CompilerServices;
 
 namespace Contouring_App.Application.Services
@@ -9,13 +10,11 @@ namespace Contouring_App.Application.Services
     public class DevService : IDevService
     {
         private readonly IUnitofWork _unit;
-        private readonly IGenericRepo<Dev> _gen;
       
 
-        public DevService(IGenericRepo<Dev> gen, IUnitofWork unit)
+        public DevService(IUnitofWork unit)
         {
             _unit = unit;
-            _gen = gen;
         }
 
         public async Task<List<Dev>> getStacklist(string ts)
@@ -24,28 +23,28 @@ namespace Contouring_App.Application.Services
         }
         public async Task Add(Dev dev)
         {
-            await _gen.Add(dev);
+            await _unit.devs.Add(dev);
         }
 
         public async Task Delete(Dev dev)
         {
-            await _gen.Delete(dev);
+            await _unit.devs.Delete(dev);
         }
 
         public async Task<IEnumerable<Dev>> GetAll()
         {
-            return await _gen.GetAll();
+            return await _unit.devs.GetAll();
         }
 
         public async Task<Dev> GetById(int id)
         {
-            Dev dev = await _gen.GetById(id);
+            Dev dev = await _unit.devs.GetById(id);
             return dev;
         }
 
         public async Task Update(Dev dev)
         {
-            await _gen.Update(dev);
+            await _unit.devs.Update(dev);
         }
     }
 }

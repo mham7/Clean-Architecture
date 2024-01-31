@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-namespace Domain.Interfaces.Repositories
+namespace Domain.Interfaces.Repos
 {
     public interface IGenericRepo<T>
     {

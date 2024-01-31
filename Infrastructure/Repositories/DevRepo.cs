@@ -1,14 +1,14 @@
 ﻿using Domain.Entities;
-using Domain.Interfaces.Repositories;
+using Domain.Interfaces.Repos;
 using Infrastructure.Context;
 
 namespace Infrastructure.Repositories
 {
-    public class DevRepo : IDevRepo
+    public class DevRepo : GenericRepo<Dev>,IDevRepo
     {
         private readonly AppDbContext _appDbContext;
 
-        public DevRepo(AppDbContext appDbContext)
+        public DevRepo(AppDbContext appDbContext):base(appDbContext) 
         {
             _appDbContext = appDbContext;
         }

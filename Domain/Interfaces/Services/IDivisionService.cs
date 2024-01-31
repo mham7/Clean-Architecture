@@ -1,8 +1,7 @@
 ﻿using Domain.Entities;
-using Domain.Interfaces;
 using Domain.Entities.Dtos;
 
-namespace Domain.Interfaces
+namespace Domain.Interfaces.Services
 {
     public interface IDivisionService
     {

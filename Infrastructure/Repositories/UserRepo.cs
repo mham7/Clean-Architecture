@@ -1,17 +1,18 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces.Repositories;
+using Domain.Interfaces.Repos;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Infrastructure.Repositories
 {
-    public class UserRepo : IUserRepo
+    public class UserRepo : GenericRepo<Usercs>, IUserRepo
     {
         private readonly AppDbContext _appDbContext;
-        public UserRepo(AppDbContext appDbContext)
+        public UserRepo(AppDbContext appDbContext) : base(appDbContext)
         {
             _appDbContext = appDbContext;
         }
