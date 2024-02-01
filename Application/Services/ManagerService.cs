@@ -1,8 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces.Repos;
-using Domain.Interfaces.Services;
-using Domain.Interfaces.UnitOfWork;
+using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
 
 namespace Contouring_App.Application.Services
 {

@@ -1,6 +1,7 @@
-﻿using Domain.Entities;
+﻿using Application.Interfaces.Repos;
+using Domain.Entities;
 
-namespace Domain.Interfaces.Services
+namespace Application.Interfaces.Services
 {
     public interface ITraineeService:IGenericServices<Trainee>
     {

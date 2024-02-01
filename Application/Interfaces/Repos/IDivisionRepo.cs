@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
 using System.Threading.Tasks;
-namespace Domain.Interfaces.Repos
+namespace Application.Interfaces.Repos
 {
     public interface IDivisionRepo:IGenericRepo<Division>
     {

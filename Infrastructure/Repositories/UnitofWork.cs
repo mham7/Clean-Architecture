@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Repositories;
 using Infrastructure.Context;
-using Domain.Interfaces.Repos;
-using Domain.Interfaces.UnitOfWork;
+using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
 
 
 namespace Infrastructure.UnitOfWork

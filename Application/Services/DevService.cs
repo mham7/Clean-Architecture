@@ -1,8 +1,7 @@
-﻿
-using Domain.Entities;
-using Domain.Interfaces.Repos;
-using Domain.Interfaces.Services;
-using Domain.Interfaces.UnitOfWork;
+﻿using Domain.Entities;
+using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
+using Application.Interfaces.Services;
 using System.Runtime.CompilerServices;
 
 namespace Contouring_App.Application.Services

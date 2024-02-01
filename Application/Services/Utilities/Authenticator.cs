@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
+﻿using Application.Interfaces.Repos.Utlities;
+using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -11,14 +11,24 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Utilities
+namespace Application.Services.Utilities
 {
-   public static class Authenticator
+    public class Authenticator:IAuthenticator
     {
-
-    
        
-        public static string Tokenization(Usercs user, IConfiguration _config)
+        public Usercs HashUser(Usercs user)
+        {
+            user.Password =BCrypt.Net.BCrypt.HashPassword(user.Password);
+            return user;
+        }
+        public bool Verification(string cred_password,string actual_password)
+        {
+
+            bool isPasswordValid =  BCrypt.Net.BCrypt.Verify(cred_password, actual_password);
+            return isPasswordValid;
+        }
+
+        public string Tokenization(Usercs user, IConfiguration _config)
         {
 
             var config = _config.GetSection("Jwt");

@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Domain.Interfaces.Services
+namespace Application.Interfaces.Repos
 {
     public interface IManagerService :IGenericServices<Manager>
     {

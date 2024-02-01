@@ -13,21 +13,25 @@ using Infrastructure.UnitOfWork;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Domain.Interfaces.Services;
-using Domain.Interfaces.Repos;
-using Domain.Interfaces.UnitOfWork;
+using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
+using Application.Interfaces.Services;
+using Application.Interfaces.Repos.Utlities;
+using Application.Services.Utilities;
+using Application.Interfaces.Services.Utlities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-
+builder.Services.AddTransient<IMapper, Mapper>();
 builder.Services.AddScoped<IAdminRepo, AdminRepo>();
 builder.Services.AddScoped<IManagerRepo, ManagerRepo>();
 builder.Services.AddScoped<ITraineeRepo, TraineeRepo>();
 builder.Services.AddScoped<IDivisionRepo, DivisionRepo>();
 builder.Services.AddScoped<IDevRepo, DevRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddTransient<IAuthenticator, Authenticator>();
 // Unit of Work
 builder.Services.AddScoped<IUnitofWork, UnitofWork>();
 //Services

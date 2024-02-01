@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
+﻿using Application.Interfaces.Repos;
+using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces.Repos;
 using Infrastructure.Context;
 
 namespace Infrastructure.Repositories

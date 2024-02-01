@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 
-namespace Domain.Interfaces.Repos
+
+namespace Application.Interfaces.Repos
 {
     public interface IDevRepo:IGenericRepo<Dev>
     {

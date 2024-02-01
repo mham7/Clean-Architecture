@@ -1,8 +1,8 @@
-﻿using Domain.Interfaces.Repos;
+﻿using Application.Interfaces.Repos;
 using System;
 using System.Collections.Generic;
 
-namespace Domain.Interfaces.UnitOfWork
+namespace Application.Interfaces.UnitOfWork
 {
     public interface IUnitofWork : IDisposable
     {

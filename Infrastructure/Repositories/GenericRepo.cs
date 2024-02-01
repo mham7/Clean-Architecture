@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-using Domain.Entities;
-using Domain.Entities.Dtos;
 using Infrastructure.Context;
-using Domain.Interfaces.Repos;
+
+using Application.Interfaces.Repos;
 
 namespace Infrastructure.Repositories
 

@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using System;
 
-namespace Domain.Interfaces.Services
+namespace Application.Interfaces.Repos
 {
     public interface IAdminService:IGenericServices<Admin>
     {   

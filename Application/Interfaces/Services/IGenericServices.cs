@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Interfaces.Services
+namespace Application.Interfaces.Repos
 {
     public interface IGenericServices<T> where T : class
     {

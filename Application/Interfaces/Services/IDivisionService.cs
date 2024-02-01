@@ -1,8 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces.Repos;
 
-namespace Domain.Interfaces.Services
+
+namespace Application.Interfaces.Repos
 {
     public interface IDivisionService:IGenericServices<Division>
     {

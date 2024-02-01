@@ -1,10 +1,11 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
 using Microsoft.Extensions.Configuration;
-using Application.Utilities;
-using Domain.Interfaces.Services;
-using Domain.Interfaces.Repos;
-using Domain.Interfaces.UnitOfWork;
+using Application.Interfaces.UnitOfWork;
+using Application.Services.Utilities;
+using Application.Interfaces.Services;
+using Application.Interfaces.Repos.Utlities;
+using Application.Interfaces.Services.Utlities;
 
 namespace Application.Services
 {
@@ -13,10 +14,14 @@ namespace Application.Services
 
         private readonly IUnitofWork _unit;
         private readonly IConfiguration _config;
-        public UserService(IUnitofWork unit, IConfiguration config)
+        private readonly IAuthenticator _auth;
+        private readonly IMapper _mapper;
+        public UserService(IUnitofWork unit, IConfiguration config,IAuthenticator auth,IMapper mapper)
         {
             _unit = unit;
             _config = config;   
+            _auth = auth;
+            _mapper = mapper;
         }
         public async Task Add(Usercs users)
         {
@@ -45,26 +50,30 @@ namespace Application.Services
 
                 return "Not Authenicated";
             }
-            return Authenticator.Tokenization(authuser,_config);
+            return _auth.Tokenization(authuser,_config);
 
         }
 
         public async Task<Userdto> Register(Usercs user)
         {
-            string password = user.Password;
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-            user.Password=hashedPassword;
-            await _unit.users.Add(user);
-            Userdto userdto = new Userdto();
-            userdto.password=hashedPassword;
-            userdto.email=user.Email;
-            return userdto;
+            try
+            {
+                user = _auth.HashUser(user);
+                await _unit.users.Add(user);
+                return _mapper.UserToCredMapper(user);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
 
-        }
 
-      
+            }
 
-      
+
+
+
+
 
         public async Task Update(Usercs users)
         {

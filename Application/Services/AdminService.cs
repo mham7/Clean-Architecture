@@ -1,7 +1,6 @@
-﻿using Domain.Entities;
-using Domain.Interfaces.Repos;
-using Domain.Interfaces.Services;
-using Domain.Interfaces.UnitOfWork;
+﻿using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
+using Domain.Entities;
 namespace Contouring_App.Application.Services
 {
     public class AdminService : IAdminService
