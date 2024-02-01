@@ -17,13 +17,13 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Trainee>>> GetAllTrainees()
         {
-            if (await _traineeService.GetAllAsync() == null)
+            if (await _traineeService.GetAll() == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(await _traineeService.GetAllAsync());
+                return Ok(await _traineeService.GetAll());
             }
         
         }
@@ -56,7 +56,7 @@ namespace Contouring_App.Presentation.Controllers
         {
             if (id != 0)
             {
-                Trainee a = await _traineeService.GetByIdAsync(id);
+                Trainee a = await _traineeService.GetById(id);
                 await _traineeService.Delete(a);
                 return Ok(a);
             }
@@ -86,7 +86,7 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Trainee>> GetTrainee(int id)
         {
-            Trainee a = await _traineeService.GetByIdAsync(id);
+            Trainee a = await _traineeService.GetById(id);
             if (a == null)
             {
                 return NotFound(id);

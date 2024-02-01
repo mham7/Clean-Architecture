@@ -1,8 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
 using Domain.Interfaces.Repos;
-using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
+using Domain.Interfaces.UnitOfWork;
 
 namespace Contouring_App.Application.Services
 {
@@ -23,7 +23,7 @@ namespace Contouring_App.Application.Services
            await _unit.managers.Delete(manager);
         }
 
-        public async Task<IEnumerable<Manager>> GetAllAsync()
+        public async Task<IEnumerable<Manager>> GetAll()
         {
 
             return await _unit.managers.GetAll();

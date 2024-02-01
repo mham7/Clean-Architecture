@@ -2,7 +2,6 @@ using Application;
 using Application.Services;
 using Contouring_App.Application.Services;
 using Microsoft.Extensions.Configuration;
-using Domain.Interfaces.Repositories;
 using Infrastructure;
 using Infrastructure.Context;
 using Infrastructure.Repositories;
@@ -16,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Domain.Interfaces.Services;
 using Domain.Interfaces.Repos;
+using Domain.Interfaces.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 

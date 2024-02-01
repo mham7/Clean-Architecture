@@ -1,17 +1,11 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
+using Domain.Interfaces.Repos;
 
 namespace Domain.Interfaces.Services
 {
-    public interface IDivisionService
+    public interface IDivisionService:IGenericServices<Division>
     {
-        Task Delete(Division division);
-        Task Add(Division division);
         Task<List<Divlist>> GetDivisionsAsync(int div_id);
-        Task<IEnumerable<Division>> GetAll();
-        Task<Division> GetByIdAsync(int id);
-        Task Update(Division division);
-
-
     }
 }

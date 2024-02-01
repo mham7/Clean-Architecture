@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Domain.Interfaces.Repositories
+namespace Domain.Interfaces.UnitOfWork
 {
     public interface IUnitofWork : IDisposable
     {
@@ -13,6 +13,6 @@ namespace Domain.Interfaces.Repositories
         IUserRepo users { get; }
         IManagerRepo managers { get; }
         Task SaveChanges();
-        
+
     }
 }

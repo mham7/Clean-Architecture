@@ -2,13 +2,9 @@
 
 namespace Domain.Interfaces.Services
 {
-    public interface IManagerService
+    public interface IManagerService :IGenericServices<Manager>
     {
 
-         Task<Manager> GetById(int id);
-         Task<IEnumerable<Manager>> GetAllAsync();
-         Task Add(Manager manager);
-         Task Update(Manager manager);
-         Task Delete(Manager manager);
+         
     }
 }

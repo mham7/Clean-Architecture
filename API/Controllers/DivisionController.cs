@@ -55,7 +55,7 @@ namespace Contouring_App.Presentation.Controllers
         {
             if (id != 0)
             {
-                Division a = await _divisonService.GetByIdAsync(id);
+                Division a = await _divisonService.GetById(id);
                 await _divisonService.Delete(a);
                 return Ok(a);
             }
@@ -85,7 +85,7 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Division>> GetDiv(int id)
         {
-            Division a = await _divisonService.GetByIdAsync(id);
+            Division a = await _divisonService.GetById(id);
             if (a == null)
             {
                 return NotFound(id);

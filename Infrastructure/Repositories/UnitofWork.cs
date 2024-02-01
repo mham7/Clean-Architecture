@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Repositories;
 using Infrastructure.Context;
-using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Repos;
+using Domain.Interfaces.UnitOfWork;
 
 
 namespace Infrastructure.UnitOfWork
@@ -9,7 +9,6 @@ namespace Infrastructure.UnitOfWork
     public class UnitofWork : IUnitofWork
     {
         private readonly AppDbContext _appcontext;
-
         public IAdminRepo admins { get; }
 
         public IDevRepo devs { get; }

@@ -1,8 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
 using Domain.Interfaces.Repos;
-using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
+using Domain.Interfaces.UnitOfWork;
 
 namespace Contouring_App.Application.Services
 {
@@ -28,12 +28,12 @@ namespace Contouring_App.Application.Services
             return await _unit.trainees.GetTraineeswithMinWage(salary);
         }
 
-        public async Task<IEnumerable<Trainee>> GetAllAsync()
+        public async Task<IEnumerable<Trainee>> GetAll()
         {
             return await _unit.trainees.GetAll();
         }
 
-        public async Task<Trainee> GetByIdAsync(int id)
+        public async Task<Trainee> GetById(int id)
         {
             return await _unit.trainees.GetById(id);
         }

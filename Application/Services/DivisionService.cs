@@ -1,8 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
 using Domain.Interfaces.Repos;
-using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
+using Domain.Interfaces.UnitOfWork;
 
 namespace Contouring_App.Application.Services
 {
@@ -33,7 +33,7 @@ namespace Contouring_App.Application.Services
             return await _unit.divs.GetAll();
         }
 
-        public async Task<Division> GetByIdAsync(int id)
+        public async Task<Division> GetById(int id)
         {
             return await _unit.divs.GetById(id);
         }

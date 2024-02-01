@@ -16,13 +16,13 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Manager>>> GetAllManagers()
         {
-            if (await _mangservice.GetAllAsync() == null)
+            if (await _mangservice.GetAll() == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(await _mangservice.GetAllAsync());
+                return Ok(await _mangservice.GetAll());
             }
         }
 

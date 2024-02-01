@@ -2,14 +2,8 @@
 
 namespace Domain.Interfaces.Services
 {
-    public interface ITraineeService 
+    public interface ITraineeService:IGenericServices<Trainee>
     {
-
-        Task<Trainee> GetByIdAsync(int id);
-        Task<IEnumerable<Trainee>> GetAllAsync();
-        Task Add(Trainee trainee);
-        Task Update(Trainee trainee);
-        Task Delete(Trainee trainee);
         Task<List<Trainee>> GetMinWageAsync(int salary);
     }
 }

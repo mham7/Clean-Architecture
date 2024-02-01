@@ -1,10 +1,10 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces.Repositories;
 using Microsoft.Extensions.Configuration;
 using Application.Utilities;
 using Domain.Interfaces.Services;
 using Domain.Interfaces.Repos;
+using Domain.Interfaces.UnitOfWork;
 
 namespace Application.Services
 {
