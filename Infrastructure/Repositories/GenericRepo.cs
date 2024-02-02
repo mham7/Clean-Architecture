@@ -1,65 +1,48 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-using Domain.Entities;
-using Domain.Entities.Dtos;
-using Domain.Interfaces.Repositories;
 using Infrastructure.Context;
+
+using Application.Interfaces.Repos;
 
 namespace Infrastructure.Repositories
 
 {
-    public class GenericRepo<T> : IGenericRepo<T> where T : class
+    public abstract class GenericRepo<T>(AppDbContext appcontext) : IGenericRepo<T> where T : class
     {
-        private readonly AppDbContext _appContext;
+        private readonly AppDbContext _appContext = appcontext;
 
-        public GenericRepo(AppDbContext appcontext)
+        public virtual async Task<T> GetById(int id)
         {
-            _appContext = appcontext;
+            T entity = await  _appContext.Set<T>().FindAsync(id);
+            return entity ?? throw new Exception("Data is nulll");
         }
 
-        public T GetById(int id)
+        public virtual async Task<IEnumerable<T>> GetAll()
         {
-            T entity = _appContext.Set<T>().Find(id);
-            if (entity == null)
-            {
-                throw new Exception("Data is nulll");
-            }
-
-            return entity;
-
+            IEnumerable<T> all_data = await _appContext.Set<T>().ToListAsync();
+            return all_data ?? throw new Exception("Data is nulll");
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual async Task Add(T entity)
         {
-            IEnumerable<T> all_data = _appContext.Set<T>().ToList();
-            if (all_data == null)
-            {
-                throw new Exception("Data is nulll");
-            }
-            return all_data;
-
+            await _appContext.Set<T>().AddAsync(entity);
+            await SaveChanges();
         }
 
-        public void Add(T entity)
+        public virtual async Task Update(T entity)
         {
-            _appContext.Set<T>().Add(entity);
-            SaveChanges();
+             _appContext.Set<T>().Update(entity);
+            await SaveChanges();
         }
 
-        public void Update(T entity)
-        {
-            _appContext.Set<T>().Update(entity);
-            SaveChanges();
-        }
-
-        public void Delete(T entity)
+        public virtual async Task Delete(T entity)
         {
             _appContext.Set<T>().Remove(entity);
-            SaveChanges();
+           await SaveChanges();
         }
-        public void SaveChanges()
+        public virtual async Task SaveChanges()
         {
-            _appContext.SaveChanges();
+           await _appContext.SaveChangesAsync();
         }
     }
 

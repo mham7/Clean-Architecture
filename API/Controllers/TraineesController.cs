@@ -1,6 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces;
+using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
+using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,24 +12,20 @@ namespace Contouring_App.Presentation.Controllers
 {
     [Route("api/[controller]"), Authorize]
     [ApiController]
-    public class TraineesController : ControllerBase
+    public class TraineesController(ITraineeService traineeService) : ControllerBase
     {
-        private readonly ITraineeService _traineeService;
-        public TraineesController(ITraineeService traineeService)
-        {
-            _traineeService = traineeService;
-        }
+        private readonly ITraineeService _traineeService = traineeService;
 
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Trainee>>> GetAllTrainees()
         {
-            if (_traineeService.GetAll() == null)
+            if (await _traineeService.GetAll() == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(_traineeService.GetAll());
+                return Ok(await _traineeService.GetAll());
             }
         
         }
@@ -36,7 +34,7 @@ namespace Contouring_App.Presentation.Controllers
 
         public async Task<ActionResult<List<Trainee>>> GetMinSalary(int salary)
         {
-            return _traineeService.GetMinWage(salary);
+            return await _traineeService.GetMinWageAsync(salary);
         }
 
         [HttpPost("Add")]
@@ -49,7 +47,7 @@ namespace Contouring_App.Presentation.Controllers
             }
             else
             {
-                _traineeService.Add(div);
+               await _traineeService.Add(div);
                 return Ok(div);
             }
         }
@@ -60,8 +58,8 @@ namespace Contouring_App.Presentation.Controllers
         {
             if (id != 0)
             {
-                Trainee a = _traineeService.GetById(id);
-                _traineeService.Delete(a);
+                Trainee a = await _traineeService.GetById(id);
+                await _traineeService.Delete(a);
                 return Ok(a);
             }
             else
@@ -90,7 +88,7 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Trainee>> GetTrainee(int id)
         {
-            Trainee a = _traineeService.GetById(id);
+            Trainee a = await _traineeService.GetById(id);
             if (a == null)
             {
                 return NotFound(id);

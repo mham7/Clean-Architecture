@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Repositories;
 using Infrastructure.Context;
-using Domain.Interfaces.Repositories;
+using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
 
 
 namespace Infrastructure.UnitOfWork
@@ -8,7 +9,6 @@ namespace Infrastructure.UnitOfWork
     public class UnitofWork : IUnitofWork
     {
         private readonly AppDbContext _appcontext;
-
         public IAdminRepo admins { get; }
 
         public IDevRepo devs { get; }
@@ -38,9 +38,9 @@ namespace Infrastructure.UnitOfWork
             _appcontext.Dispose();
         }
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            _appcontext.SaveChanges();
+            await _appcontext.SaveChangesAsync();
         }
     }
 }

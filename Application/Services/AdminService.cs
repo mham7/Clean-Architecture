@@ -1,48 +1,47 @@
-﻿using Domain.Entities;
-using Domain.Interfaces;
-using Domain.Interfaces.Repositories;
+﻿using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
+using Domain.Entities;
 namespace Contouring_App.Application.Services
 {
     public class AdminService : IAdminService
     {
         private readonly IUnitofWork _unit;
-        private readonly IGenericRepo<Admin> _gen;
+        
 
-        public AdminService(IGenericRepo<Admin> gen,IUnitofWork unit)
+        public AdminService(IUnitofWork unit)
         {
             _unit= unit;
-            _gen= gen;
         }
-        public void Add(Admin admin)
+        public async Task Add(Admin admin)
         {
-            _gen.Add(admin);    
-        }
-
-        public void Delete(Admin admin)
-        {
-            _gen.Delete(admin);
+           await _unit.admins.Add(admin);    
         }
 
-        public IEnumerable<Admin> GetAll()
+        public async Task Delete(Admin admin)
         {
-           return _gen.GetAll();
+            await _unit.admins.Delete(admin);
         }
 
-        public  Admin GetById(int id)
+        public async Task<IEnumerable<Admin>> GetAll()
         {
-            Admin admin = _gen.GetById(id);
+           return await _unit.admins.GetAll();
+        }
+
+        public async Task<Admin> GetById(int id)
+        {
+            Admin admin = await _unit.admins.GetById(id);
             return admin;
         }
 
-        public List<Admin> IsSalaryGreater(int salary)
+        public async Task<List<Admin>> IsSalaryGreater(int salary)
         {
-            return _unit.admins.IsSalaryGreater(salary);
+            return await _unit.admins.IsSalaryGreater(salary);
 
         }
 
-        public void Update(Admin admin)
+        public async Task Update(Admin admin)
         {
-            _gen.Update(admin);
+           await _unit.admins.Update(admin);
         }
     }
 }

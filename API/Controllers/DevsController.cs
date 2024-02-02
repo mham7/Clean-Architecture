@@ -1,6 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces;
+using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
+using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,40 +12,36 @@ namespace Contouring_App.Presentation.Controllers
 {
     [Route("api/[controller]"),Authorize]
     [ApiController]
-    public class DevsController : ControllerBase
+    public class DevsController(IDevService devService) : ControllerBase
     {
 
-        private readonly IDevService _devService;
-        public DevsController(IDevService devService)
-        {
-            _devService = devService;
-        }
+        private readonly IDevService _devService = devService;
 
-        [ResponseCache(Duration = 60 * 60)]
+    
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Dev>>> GetAllDevs()
         {
             
-            if (_devService.GetAll() == null)
+            if (await _devService.GetAll() == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(_devService.GetAll());
+                return Ok(await _devService.GetAll());
             }
         }
 
         [HttpGet("GetStacks")]
         public async Task<ActionResult<List<Dev>>> GetStackDevs(string techstack)
         {
-            if (_devService.getstacklist(techstack) == null)
+            if (await _devService.getStacklist(techstack) == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(_devService.getstacklist(techstack));
+                return Ok(await _devService.getStacklist(techstack));
             }
         }
 
@@ -57,7 +55,7 @@ namespace Contouring_App.Presentation.Controllers
             }
             else
             {
-                _devService.Add(dev);
+               await _devService.Add(dev);
                 return Ok(dev);
             }
         }
@@ -68,8 +66,8 @@ namespace Contouring_App.Presentation.Controllers
         {
             if (id != 0)
             {
-                Dev a = _devService.GetById(id);
-                _devService.Delete(a);
+                Dev a = await _devService.GetById(id);
+                await _devService.Delete(a);
                 return Ok(a);
             }
             else
@@ -99,7 +97,7 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Dev>> GetDev(int id)
         {
-            Dev a = _devService.GetById(id);
+            Dev a = await _devService.GetById(id);
             if (a == null)
             {
                 return NotFound(id);
@@ -111,21 +109,21 @@ namespace Contouring_App.Presentation.Controllers
         }
 
         //Pagination
-        [HttpGet("GetDevPages")]
-        public async Task<ActionResult<List<Dev>>> GetDevPages([FromQuery] int page = 1, [FromQuery] int per_page = 5)
-        {
-            var devs = _devService.GetAll();
+        //[HttpGet("GetDevPages")]
+        //public async Task<ActionResult<List<Dev>>> GetDevPages([FromQuery] int page = 1, [FromQuery] int per_page = 5)
+        //{
+        //    var devs = _devService.GetAll();
 
-            if (devs == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                var pagedDevs = devs.Skip((page - 1) * per_page).Take(per_page).ToList();
-                return Ok(pagedDevs);
-            }
-        }
+        //    if (devs == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    else
+        //    {
+        //        var pagedDevs = devs.Skip((page - 1) * per_page).Take(per_page).ToList();
+        //        return Ok(pagedDevs);
+        //    }
+        //}
     }
 }
 

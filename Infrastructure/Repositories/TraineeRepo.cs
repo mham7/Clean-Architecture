@@ -1,22 +1,22 @@
-﻿using Domain.Entities;
+﻿using Application.Interfaces.Repos;
+using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces.Repositories;
 using Infrastructure.Context;
 
 namespace Infrastructure.Repositories
 {
-    public class TraineeRepo : ITraineeRepo
+    public class TraineeRepo : GenericRepo<Trainee>,ITraineeRepo
     {
         private AppDbContext _dbContext;
 
-        public TraineeRepo(AppDbContext dbContext)
+        public TraineeRepo(AppDbContext dbContext):base(dbContext) 
         {
             _dbContext = dbContext;
         }
-        public List<Trainee> GetTraineeswithMinWage(int salary)
+        public async Task<List<Trainee>> GetTraineeswithMinWage(int salary)
         {
           IQueryable<Trainee> s= _dbContext.Trainee.Where(s=>s.Salary>salary);
-            return s.ToList();
+            return await s.ToListAsync();
         }
     }
 }
