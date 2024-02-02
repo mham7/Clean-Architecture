@@ -21,6 +21,12 @@ namespace Application.Services.Utilities
             user.Password =BCrypt.Net.BCrypt.HashPassword(user.Password);
             return user;
         }
+        public Userdto HashUserCred(Userdto user)
+        {
+            user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
+            return user;
+        }
+    
         public bool Verification(string cred_password,string actual_password)
         {
 

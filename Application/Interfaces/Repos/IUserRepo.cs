@@ -5,6 +5,6 @@ namespace Application.Interfaces.Repos
 {
     public interface IUserRepo : IGenericRepo<Usercs> 
     {
-        Task<Usercs> CheckAuthenticate(Userdto cred);
+        Task<Usercs> GetUserbyCred(Userdto cred);
     }
 }

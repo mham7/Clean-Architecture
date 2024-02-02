@@ -97,15 +97,9 @@ namespace Contouring_App.Presentation.Controllers
         [Authorize]
         public async Task<ActionResult<Usercs>> GetUsercs(int id)
         {
+
             Usercs a = await _userService.GetById(id);
-            if (a == null)
-            {
-                return NotFound(id);
-            }
-            else
-            {
-                return Ok(a);
-            }
+            return a == null ? NotFound(id) : Ok(a);
         }
     }
 }

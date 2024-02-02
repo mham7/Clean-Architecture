@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Repositories\DevRepo.cs~RF1595a7df.TMP" />
+    <None Remove="Repositories\DevRepo.cs~RFf1fedce.TMP" />
     <None Remove="Repositories\TraineeRepo.cs~RF15970ef0.TMP" />
   </ItemGroup>
 
