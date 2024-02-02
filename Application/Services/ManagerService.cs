@@ -1,43 +1,41 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces;
-using Domain.Interfaces.Repositories;
+using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
 
 namespace Contouring_App.Application.Services
 {
     public class ManagerService : IManagerService
     {
-        private readonly IGenericRepo<Manager> _gen;
         private readonly IUnitofWork _unit;
 
-        public ManagerService(IUnitofWork unit, IGenericRepo<Manager> gen) {
+        public ManagerService(IUnitofWork unit) {
             _unit = unit;
-            _gen = gen;
         }
-        public void Add(Manager manager)
+        public async Task Add(Manager manager)
         {
-            _gen.Add(manager);
-        }
-
-        public void Delete(Manager manager)
-        {
-            _gen.Delete(manager);
+           await _unit.managers.Add(manager);
         }
 
-        public IEnumerable<Manager> GetAll()
+        public async Task Delete(Manager manager)
         {
-
-            return _gen.GetAll();
+           await _unit.managers.Delete(manager);
         }
 
-        public Manager GetById(int id)
+        public async Task<IEnumerable<Manager>> GetAll()
         {
-            return _gen.GetById(id);
+
+            return await _unit.managers.GetAll();
         }
 
-        public void Update(Manager manager)
+        public async Task<Manager> GetById(int id)
         {
-             _gen.Update(manager);
+            return await _unit.managers.GetById(id);
+        }
+
+        public async Task Update(Manager manager)
+        {
+            await _unit.managers.Update(manager);
         }
     }
 }

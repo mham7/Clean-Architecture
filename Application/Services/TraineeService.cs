@@ -1,46 +1,46 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces;
-using Domain.Interfaces.Repositories;
+using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
+using Application.Interfaces.Services;
+
 namespace Contouring_App.Application.Services
 {
     public class TraineeService : ITraineeService
     {
         private readonly IUnitofWork _unit;
-        private readonly IGenericRepo<Trainee> _gen;
-        public TraineeService(IUnitofWork unit, IGenericRepo<Trainee> gen)
+        public TraineeService(IUnitofWork unit)
         {
             _unit = unit;
-            _gen = gen;
         }
-        public void Add(Trainee trainee)
+        public async Task Add(Trainee trainee)
         {
-            _gen.Add(trainee);
-        }
-
-        public void Delete(Trainee trainee)
-        {
-            _gen.Delete(trainee);
+           await _unit.trainees.Add(trainee);
         }
 
-        public List<Trainee> GetMinWage(int salary)
+        public async Task Delete(Trainee trainee)
         {
-            return _unit.trainees.GetTraineeswithMinWage(salary);
+            await _unit.trainees.Delete(trainee);
         }
 
-        public IEnumerable<Trainee> GetAll()
+        public async Task<List<Trainee>> GetMinWageAsync(int salary)
         {
-            return _gen.GetAll();
+            return await _unit.trainees.GetTraineeswithMinWage(salary);
         }
 
-        public Trainee GetById(int id)
+        public async Task<IEnumerable<Trainee>> GetAll()
         {
-            return _gen.GetById(id);
+            return await _unit.trainees.GetAll();
         }
 
-        public void Update(Trainee trainee)
+        public async Task<Trainee> GetById(int id)
         {
-             _gen.Update(trainee);
+            return await _unit.trainees.GetById(id);
+        }
+
+        public async Task Update(Trainee trainee)
+        {
+             await _unit.trainees.Update(trainee);
         }
     }
 }

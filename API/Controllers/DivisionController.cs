@@ -1,6 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces;
+using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
+using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,24 +12,20 @@ namespace Contouring_App.Presentation.Controllers
 {
     [Route("api/[controller]"),Authorize]
     [ApiController]
-    public class DivisionController : ControllerBase
+    public class DivisionController(IDivisionService divisionService) : ControllerBase
     {
-        private readonly IDivisionService _divisonService;
-        public DivisionController(IDivisionService divisionService)
-        {
-            _divisonService = divisionService;
-        }
+        private readonly IDivisionService _divisonService = divisionService;
 
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Division>>> GetAllDivs()
         {
-            if (_divisonService.GetAll() == null)
+            if (await _divisonService.GetAll() == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(_divisonService.GetAll());
+                return Ok(await _divisonService.GetAll());
             }
         }
 
@@ -36,7 +34,7 @@ namespace Contouring_App.Presentation.Controllers
 
         public async Task<ActionResult<List<Divlist>>> GetEmpDivs(int div_id)
         {
-           return _divisonService.GetDivisions(div_id);
+           return await _divisonService.GetDivisionsAsync(div_id);
         }
         [HttpPost("Add")]
 
@@ -48,7 +46,7 @@ namespace Contouring_App.Presentation.Controllers
             }
             else
             {
-                _divisonService.Add(div);
+               await _divisonService.Add(div);
                 return Ok(div);
             }
         }
@@ -59,8 +57,8 @@ namespace Contouring_App.Presentation.Controllers
         {
             if (id != 0)
             {
-                Division a = _divisonService.GetById(id);
-                _divisonService.Delete(a);
+                Division a = await _divisonService.GetById(id);
+                await _divisonService.Delete(a);
                 return Ok(a);
             }
             else
@@ -89,7 +87,7 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Division>> GetDiv(int id)
         {
-            Division a = _divisonService.GetById(id);
+            Division a = await _divisonService.GetById(id);
             if (a == null)
             {
                 return NotFound(id);

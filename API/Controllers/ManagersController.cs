@@ -1,6 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Dtos;
-using Domain.Interfaces;
+using Application.Interfaces.Repos;
+using Application.Interfaces.UnitOfWork;
+using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,23 +11,20 @@ namespace Contouring_App.Presentation.Controllers
 {
     [Route("api/[controller]"),Authorize]
     [ApiController]
-    public class ManagersController : ControllerBase
+    public class ManagersController(IManagerService managerService) : ControllerBase
     {
-        private readonly IManagerService _mangservice;
-        public ManagersController(IManagerService managerService) {
-        _mangservice=managerService;
-        }
+        private readonly IManagerService _mangservice = managerService;
 
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Manager>>> GetAllManagers()
         {
-            if (_mangservice.GetAll() == null)
+            if (await _mangservice.GetAll() == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(_mangservice.GetAll());
+                return Ok(await _mangservice.GetAll());
             }
         }
 
@@ -39,7 +38,7 @@ namespace Contouring_App.Presentation.Controllers
             }
             else
             {
-                _mangservice.Add(div);
+               await _mangservice.Add(div);
                 return Ok(div);
             }
         }
@@ -50,8 +49,8 @@ namespace Contouring_App.Presentation.Controllers
         {
             if (id != 0)
             {
-                Manager a = _mangservice.GetById(id);
-                _mangservice.Delete(a);
+                Manager a = await _mangservice.GetById(id);
+                await _mangservice.Delete(a);
                 return Ok(a);
             }
             else
@@ -80,7 +79,7 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Manager>> GetManager(int id)
         {
-            Manager a = _mangservice.GetById(id);
+            Manager a = await _mangservice.GetById(id);
             if (a == null)
             {
                 return NotFound(id);
