@@ -79,19 +79,32 @@ namespace Contouring_App.Presentation.Controllers
             }
 
         }
+        [HttpGet("GetAdminLocation")]
+        public async Task<ActionResult<List<Admin>>> GetOfficeLocation(string location)
+        {
+            try
+            {
+                return await _adminService.GetAdminsByLocation(location);
+            }
+            catch (Exception ex) { return BadRequest(ex); }
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Admin>> GetAdmin(int id)
         {
-            Admin a= await _adminService.GetById(id);
-            if (a == null)
+            try
             {
-                return NotFound(id);
+                Admin a = await _adminService.GetById(id);
+                if (a == null)
+                {
+                    return NotFound(id);
+                }
+                else
+                {
+                    return Ok(a);
+                }
             }
-            else
-            {
-                return Ok(a);
-            }
+            catch(Exception ex) { return BadRequest(ex.Message); }
         }
     }
 }

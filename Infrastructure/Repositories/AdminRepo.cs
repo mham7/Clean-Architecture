@@ -11,9 +11,9 @@ namespace Infrastructure.Repositories
         {
             _context= context;
         }
-        public async Task<List<Admin>> IsSalaryGreater(int count) 
+        public async Task<List<Admin>> GetAdminbyOfficeLocation(string location) 
         {
-            return await _context.Admin.Where(admins => admins.Salary >count).ToListAsync();
+            return await _context.Admin.Where(admins => admins.Location==location).ToListAsync();
         }
     }
 }

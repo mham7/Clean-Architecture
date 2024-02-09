@@ -45,12 +45,9 @@ namespace Application.Services
 
         public async Task<string> Login(Userdto user)
         { 
-            Usercs authuser =await _unit.users.CheckAuthenticate(user);
-            if(authuser == null) {
-
-                return "Not Authenicated";
-            }
-            return _auth.Tokenization(authuser,_config);
+            Usercs authuser =await _unit.users.GetUserByCredentials(user);
+            
+            return _auth.Tokenization(authuser,_config,user);
 
         }
 

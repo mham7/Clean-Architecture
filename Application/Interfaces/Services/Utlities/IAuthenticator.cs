@@ -14,6 +14,6 @@ namespace Application.Interfaces.Repos.Utlities
     {
         Usercs HashUser(Usercs user);
         bool Verification(string cred_password, string actual_password);
-        string Tokenization(Usercs user, IConfiguration _config);
+        string Tokenization(Usercs user, IConfiguration _config,Userdto actual);
     }
 }

@@ -18,7 +18,7 @@ namespace Contouring_App.Application.Services
 
         public async Task<List<Dev>> getStacklist(string ts)
         {
-           return await _unit.devs.GetStackList(ts);
+           return await _unit.devs.GetDevelopersStackList(ts);
         }
         public async Task Add(Dev dev)
         {

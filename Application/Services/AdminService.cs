@@ -14,7 +14,7 @@ namespace Contouring_App.Application.Services
         }
         public async Task Add(Admin admin)
         {
-           await _unit.admins.Add(admin);    
+           await _unit.admins.Add(admin);   
         }
 
         public async Task Delete(Admin admin)
@@ -33,11 +33,12 @@ namespace Contouring_App.Application.Services
             return admin;
         }
 
-        public async Task<List<Admin>> IsSalaryGreater(int salary)
+        public async Task<List<Admin>> GetAdminsByLocation(string location)
         {
-            return await _unit.admins.IsSalaryGreater(salary);
-
+            return await _unit.admins.GetAdminbyOfficeLocation(location);
         }
+
+       
 
         public async Task Update(Admin admin)
         {

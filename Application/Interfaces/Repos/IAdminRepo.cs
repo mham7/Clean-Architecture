@@ -4,6 +4,6 @@ namespace Application.Interfaces.Repos
 {
     public interface IAdminRepo :IGenericRepo<Admin>
     {
-        public Task<List<Admin>> IsSalaryGreater(int count);
+        Task<List<Admin>> GetAdminbyOfficeLocation(string location);
     }
 }

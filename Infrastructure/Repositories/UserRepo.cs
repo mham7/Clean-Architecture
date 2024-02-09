@@ -15,18 +15,17 @@ namespace Infrastructure.Repositories
     {
         private readonly AppDbContext _appDbContext;
         private readonly IAuthenticator _auth;
-        public UserRepo(AppDbContext appDbContext,IAuthenticator auth) : base(appDbContext)
+        public UserRepo(AppDbContext appDbContext) : base(appDbContext)
         {
             _appDbContext = appDbContext;
-            _auth = auth;
         }
-        public async Task<Usercs> CheckAuthenticate(Userdto cred)
+        public async Task<Usercs> GetUserByCredentials(Userdto cred)
         {
             IQueryable<Usercs> cs = _appDbContext.Users.Where(user => user.Email == cred.email);
 
             Usercs found_user = await cs.FirstAsync();
 
-           if( _auth.Verification(cred.password, found_user.Password))
+           if( found_user!=null)
             {
                 return found_user;
             }

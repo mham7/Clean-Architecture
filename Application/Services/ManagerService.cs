@@ -22,6 +22,8 @@ namespace Contouring_App.Application.Services
            await _unit.managers.Delete(manager);
         }
 
+     
+
         public async Task<IEnumerable<Manager>> GetAll()
         {
 
@@ -31,6 +33,11 @@ namespace Contouring_App.Application.Services
         public async Task<Manager> GetById(int id)
         {
             return await _unit.managers.GetById(id);
+        }
+
+        public async Task<List<Divlist>> TraineesAssignedToManager(Manager manager)
+        {
+           return await _unit.managers.GetTraineesUnderManager(manager);
         }
 
         public async Task Update(Manager manager)

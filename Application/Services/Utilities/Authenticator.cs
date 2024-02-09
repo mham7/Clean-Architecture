@@ -28,26 +28,34 @@ namespace Application.Services.Utilities
             return isPasswordValid;
         }
 
-        public string Tokenization(Usercs user, IConfiguration _config)
+        public string Tokenization(Usercs user, IConfiguration _config,Userdto actualuser)
         {
+            bool isvalid = Verification(actualuser.password, user.Password);
 
-            var config = _config.GetSection("Jwt");
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Key"]!));
-            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
-            List<Claim> claims = new List<Claim>
+            if (isvalid)
+            {
+                var config = _config.GetSection("Jwt");
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Key"]!));
+                var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+                List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier,user.Name)
             };
-            var token = new JwtSecurityToken(
-                claims: claims,
-                audience: config["Audience"],
-                issuer: config["Issuer"],
-                expires: DateTime.Now.AddDays(1),
-                signingCredentials: cred
-                );
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+                var token = new JwtSecurityToken(
+                    claims: claims,
+                    audience: config["Audience"],
+                    issuer: config["Issuer"],
+                    expires: DateTime.Now.AddDays(1),
+                    signingCredentials: cred
+                    );
+                var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return jwt;
+                return jwt;
+            }
+            else
+            {
+                return "Password is Invalid";
+            }
 
         }
     }

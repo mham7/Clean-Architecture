@@ -12,12 +12,13 @@ namespace Infrastructure.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<Dev>> GetStackList(string techstack)
+        public async Task<List<Dev>> GetDevelopersStackList(string techstack)
         {
             List<Dev> result = new List<Dev>();
              IQueryable<Dev> techstck = _appDbContext.Devs.Where(d => d.Techstack == techstack);
             result=  await techstck.ToListAsync();
             return result;
         }
+        
     }
 }

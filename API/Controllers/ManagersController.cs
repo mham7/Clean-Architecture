@@ -28,6 +28,15 @@ namespace Contouring_App.Presentation.Controllers
             }
         }
 
+
+
+        [HttpGet("TraineesUnderManager")]
+        public async Task<ActionResult<List<Divlist>>> GetTraineesAssignedToManager(Manager mang) { 
+            
+            return await _mangservice.TraineesAssignedToManager(mang);
+        
+        }
+
         [HttpPost("Add")]
 
         public async Task<ActionResult<Manager>> AddManager(Manager div)
@@ -62,11 +71,11 @@ namespace Contouring_App.Presentation.Controllers
 
         [HttpPut("Update")]
 
-        public ActionResult<Division> UpdateManager(Manager mang)
+        public async Task<ActionResult<Division>> UpdateManager(Manager mang)
         {
             try
             {
-                _mangservice.Update(mang);
+                await _mangservice.Update(mang);
                 return Ok(mang);
             }
             catch (Exception ex)

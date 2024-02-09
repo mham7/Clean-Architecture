@@ -11,8 +11,9 @@ namespace Infrastructure.UnitOfWork
         private readonly AppDbContext _appcontext;
         public IAdminRepo admins { get; }
 
+        public static readonly Dictionary<Type, object> Repositories = new Dictionary<Type, object>();
         public IDevRepo devs { get; }
-
+        public IGenericRepo<Type> _Generic { get; }
         public IManagerRepo managers { get; }
 
         public ITraineeRepo trainees { get; }
@@ -20,8 +21,10 @@ namespace Infrastructure.UnitOfWork
         public IDivisionRepo divs { get; }
 
         public IUserRepo users { get; }
+
+      
         public UnitofWork(AppDbContext appcontext, IAdminRepo adminrepo,
-         IDevRepo devrepo, IManagerRepo managerrepo,ITraineeRepo traineerepo, IDivisionRepo divrepo,IUserRepo userrepo)
+         IDevRepo devrepo, IManagerRepo managerrepo,IGenericRepo<Type> Generic,ITraineeRepo traineerepo, IDivisionRepo divrepo,IUserRepo userrepo)
         {
             _appcontext = appcontext;
             admins = adminrepo;
@@ -30,8 +33,11 @@ namespace Infrastructure.UnitOfWork
             trainees = traineerepo;
             divs = divrepo;
             users = userrepo;
+            _Generic = Generic;
+           
         }
-       
+
+  
 
         public void Dispose()
         {

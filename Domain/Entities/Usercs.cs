@@ -9,12 +9,6 @@ namespace Domain.Entities
         public string Email { get; set; }
         public string Password { get; set; }
 
-        private bool? isAuthenticated;
-
-        public bool IsAuthenticated
-        {
-            get => isAuthenticated ?? false;
-            set => isAuthenticated = value;
-        }
+        
     }
 }
