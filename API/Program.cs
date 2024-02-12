@@ -1,6 +1,5 @@
 using Application;
 using Application.Services;
-using Contouring_App.Application.Services;
 using Microsoft.Extensions.Configuration;
 using Infrastructure;
 using Infrastructure.Context;
@@ -19,27 +18,24 @@ using Application.Interfaces.Services;
 using Application.Interfaces.Repos.Utlities;
 using Application.Services.Utilities;
 using Application.Interfaces.Services.Utlities;
+using Application.Interfaces.Repos.DbConfiguration;
+using Infrastructure.Repositories.DbConfiguration;
+using Domain.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+//builder.Services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
 builder.Services.AddTransient<IMapper, Mapper>();
-builder.Services.AddScoped<IAdminRepo, AdminRepo>();
-builder.Services.AddScoped<IManagerRepo, ManagerRepo>();
-builder.Services.AddScoped<ITraineeRepo, TraineeRepo>();
-builder.Services.AddScoped<IDivisionRepo, DivisionRepo>();
-builder.Services.AddScoped<IDevRepo, DevRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IChatRepo,ChatRepo>();
+
 builder.Services.AddTransient<IAuthenticator, Authenticator>();
 // Unit of Work
 builder.Services.AddScoped<IUnitofWork, UnitofWork>();
+
 //Services
-builder.Services.AddScoped<IAdminService, AdminService>();
-builder.Services.AddScoped<IDevService, DevService>();
-builder.Services.AddScoped<IManagerService, ManagerService>();
-builder.Services.AddScoped<ITraineeService, TraineeService>();
-builder.Services.AddScoped<IDivisionService, DivisionService>();
+builder.Services.AddScoped(typeof(IGenericServices<>), typeof(GenericService<>));
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Logging.AddRinLogger(); 
@@ -85,6 +81,8 @@ builder.Services.AddSwaggerGen(options =>
 }
 
 );
+builder.Services.AddScoped<IDbConfiguration, DbConfiguration>();
+
 builder.Services.AddDbContext<AppDbContext>();
 
 var app = builder.Build();

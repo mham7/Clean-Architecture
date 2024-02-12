@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +10,10 @@ namespace Application.Interfaces.Repos
     public interface IGenericServices<T> where T : class
     {
 
-        Task<T> GetById(int id);
-        Task<IEnumerable<T>> GetAll();
-        Task Add(T Entity);
-        Task Update(T Entity);
+        Task<T> Get(int id);
+        Task<IEnumerable<T>> Get();
+        Task Post(T Entity);
+        Task Put(T Entity);
         Task Delete(T Entity);
     }
 }

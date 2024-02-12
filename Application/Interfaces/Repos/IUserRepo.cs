@@ -1,10 +1,12 @@
-﻿using Domain.Entities;
-using Domain.Entities.Dtos;
+﻿using Domain.Models;
+using Domain.Models;
+using Domain.Models.Dtos;
 
 namespace Application.Interfaces.Repos
 {
-    public interface IUserRepo : IGenericRepo<Usercs> 
+    public interface IUserRepo : IGenericRepo<User> 
     {
-        Task<Usercs> GetUserByCredentials(Userdto cred);
+        Task<User> Get(Userdto cred);
+        
     }
 }

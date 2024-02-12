@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Repos;
 using Application.Interfaces.Repos.Utlities;
-using Domain.Entities;
-using Domain.Entities.Dtos;
+using Domain.Models;
+using Domain.Models.Dtos;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Infrastructure.Repositories
 {
-    public class UserRepo : GenericRepo<Usercs>, IUserRepo
+    public class UserRepo : GenericRepo<User>, IUserRepo
     {
         private readonly AppDbContext _appDbContext;
         private readonly IAuthenticator _auth;
@@ -19,11 +19,12 @@ namespace Infrastructure.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<Usercs> GetUserByCredentials(Userdto cred)
+        //get User by credentials or email.
+        public async Task<User> Get(Userdto cred)
         {
-            IQueryable<Usercs> cs = _appDbContext.Users.Where(user => user.Email == cred.email);
+            IQueryable<User> cs = _appDbContext.Users.Where(user => user.Email == cred.email);
 
-            Usercs found_user = await cs.FirstAsync();
+            User found_user = await cs.FirstAsync();
 
            if( found_user!=null)
             {
@@ -35,6 +36,34 @@ namespace Infrastructure.Repositories
             }
         }
 
-        
+        //get all data of user 
+        public override async Task<User> Get(int id)
+        {
+
+            User user = await (from userEntity in _appDbContext.Users
+            join role in _appDbContext.Roles on userEntity.RoleId equals role.RoleId
+            join div in _appDbContext.Divisions on userEntity.DivId equals div.DivId
+            where userEntity.UserId == id
+            select new User
+            {
+              UserId=userEntity.UserId,
+              FirstName = userEntity.FirstName,
+              LastName = userEntity.LastName,
+              Email = userEntity.Email,
+              Password=userEntity.Password,
+              Salary=userEntity.Salary,
+              Div = div, 
+              Role = role,
+              RoleId=userEntity.UserId,
+              DivId=userEntity.DivId
+              }).FirstOrDefaultAsync();
+
+            return user;
+
+        }
+
+
+
+
     }
 }

@@ -6,12 +6,9 @@ namespace Application.Interfaces.UnitOfWork
 {
     public interface IUnitofWork : IDisposable
     {
-        IAdminRepo admins { get; }
-        IDevRepo devs { get; }
-        ITraineeRepo trainees { get; }
-        IDivisionRepo divs { get; }
+       
         IUserRepo users { get; }
-        IManagerRepo managers { get; }
+        IGenericRepo<Type> _Generic { get; }
         Task SaveChanges();
 
     }

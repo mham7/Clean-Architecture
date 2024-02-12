@@ -1,11 +1,12 @@
-﻿using Domain.Entities;
-using Domain.Entities.Dtos;
+﻿
 using Microsoft.Extensions.Configuration;
 using Application.Interfaces.UnitOfWork;
 using Application.Services.Utilities;
 using Application.Interfaces.Services;
 using Application.Interfaces.Repos.Utlities;
 using Application.Interfaces.Services.Utlities;
+using Domain.Models.Dtos;
+using Domain.Models;
 
 namespace Application.Services
 {
@@ -23,41 +24,42 @@ namespace Application.Services
             _auth = auth;
             _mapper = mapper;
         }
-        public async Task Add(Usercs users)
+        public async System.Threading.Tasks.Task Post(User users)
         {
-           await  _unit.users.Add(users);
+           await  _unit.users.Post(users);
         }
 
-        public async Task Delete(Usercs users)
+        public async System.Threading.Tasks.Task Delete(User users)
         {
            await _unit.users.Delete(users);
         }
 
-        public async Task<IEnumerable<Usercs>> GetAll()
+        public async Task<IEnumerable<User>> Get()
         {
-            return await _unit.users.GetAll();
+            return await _unit.users.Get();
         }
 
-        public async Task<Usercs> GetById(int id)
+        public async Task<User> Get(int id)
         {
-            return await _unit.users.GetById(id);
+            return await _unit.users.Get(id);
         }
 
         public async Task<string> Login(Userdto user)
         { 
-            Usercs authuser =await _unit.users.GetUserByCredentials(user);
+            User authuser =await _unit.users.Get(user);
             
             return _auth.Tokenization(authuser,_config,user);
 
         }
 
-        public async Task<Userdto> Register(Usercs user)
+        public async Task<Userdto> Register(UserRegInfo user)
         {
             try
             {
-                user = _auth.HashUser(user);
-                await _unit.users.Add(user);
-                return _mapper.UserToCredMapper(user);
+                User auth = _mapper.RegToUserMapper(user);
+                auth = _auth.HashUser(auth);
+                await _unit.users.Post(auth);
+                return _mapper.UserToCredMapper(auth);
             }
             catch(Exception ex)
             {
@@ -67,14 +69,14 @@ namespace Application.Services
 
             }
 
-
-
-
-
-
-        public async Task Update(Usercs users)
+        public async System.Threading.Tasks.Task Put(User users)
         {
-           await _unit.users.Update(users);
+           await _unit.users.Put(users);
+        }
+
+        public Task<User> GetById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

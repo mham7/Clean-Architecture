@@ -1,15 +1,16 @@
-﻿using Domain.Entities;
-using Domain.Entities.Dtos;
+﻿
 using Application.Interfaces.Repos;
 using Application.Interfaces.UnitOfWork;
 using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Domain.Models.Dtos;
+using Domain.Models;
 
 namespace Contouring_App.Presentation.Controllers
 {
-    [Route("api/[controller]"), Authorize]
+    [Route("api/[controller]")]
     public class UsersController(IUserService userService) : ControllerBase
     {
         private readonly IUserService _userService = userService;
@@ -17,13 +18,13 @@ namespace Contouring_App.Presentation.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllUsercss()
         {
-            if (await _userService.GetAll() == null)
+            if (await _userService.Get() == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(await _userService.GetAll());
+                return Ok(await _userService.Get());
             }
         }
 
@@ -31,7 +32,7 @@ namespace Contouring_App.Presentation.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<ActionResult<Usercs>> SigninUser([FromBody] Userdto div)
+        public async Task<ActionResult<User>> SigninUser([FromBody] Userdto div)
         {
             if (div == null)
             {
@@ -47,7 +48,7 @@ namespace Contouring_App.Presentation.Controllers
 
         [HttpPost("Register")]
         [AllowAnonymous]
-        public async Task<ActionResult<Usercs>> AddUsercs(Usercs div)
+        public async Task<ActionResult<User>> AddUsercs(UserRegInfo div)
         {
             if (div == null)
             {
@@ -62,11 +63,11 @@ namespace Contouring_App.Presentation.Controllers
 
         [HttpDelete("Delete")]
         [Authorize]
-        public async Task<ActionResult<Usercs>> DeleteUsercs(int id)
+        public async Task<ActionResult<User>> DeleteUsercs(int id)
         {
             if (id != 0)
             {
-                Usercs a = await _userService.GetById(id);
+                User a = await _userService.Get(id);
                await _userService.Delete(a);
                 return Ok(a);
             }
@@ -79,11 +80,11 @@ namespace Contouring_App.Presentation.Controllers
 
         [HttpPut("Update")]
         [Authorize]
-        public async Task<ActionResult<Usercs>> UpdateUsercs(Usercs mang)
+        public async Task<ActionResult<User>> UpdateUsercs(User mang)
         {
             try
             {
-               await _userService.Update(mang);
+               await _userService.Put(mang);
                 return Ok(mang);
             }
             catch (Exception ex)
@@ -94,10 +95,10 @@ namespace Contouring_App.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
-        public async Task<ActionResult<Usercs>> GetUsercs(int id)
+        //[Authorize]
+        public async Task<ActionResult<User>> GetUser(int id)
         {
-            Usercs a = await _userService.GetById(id);
+            User a = await _userService.Get(id);
             if (a == null)
             {
                 return NotFound(id);

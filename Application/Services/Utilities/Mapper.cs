@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.Services.Utlities;
-using Domain.Entities;
-using Domain.Entities.Dtos;
+using Domain.Models;
+using Domain.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace Application.Services.Utilities
 {
     public class Mapper : IMapper
     {
-        public Userdto UserToCredMapper(Usercs cs)
+        public Userdto UserToCredMapper(User cs)
         {
             Userdto Dto = new Userdto
             {
@@ -19,6 +19,20 @@ namespace Application.Services.Utilities
                 password = cs.Password
             };
             return Dto;
+        }
+
+        public User RegToUserMapper(UserRegInfo userRegInfo)
+        {
+            User user = new User
+            {
+                FirstName = userRegInfo.FirstName,
+                LastName = userRegInfo.LastName,
+                Email = userRegInfo.Email,
+                Password = userRegInfo.Password,
+                Salary = userRegInfo.Salary,
+                DateOfJoining = userRegInfo.DOJ,
+            };
+            return user;
         }
     }
 }

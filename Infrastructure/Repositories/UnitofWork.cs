@@ -2,6 +2,7 @@
 using Infrastructure.Context;
 using Application.Interfaces.Repos;
 using Application.Interfaces.UnitOfWork;
+using Domain.Models;
 
 
 namespace Infrastructure.UnitOfWork
@@ -9,32 +10,25 @@ namespace Infrastructure.UnitOfWork
     public class UnitofWork : IUnitofWork
     {
         private readonly AppDbContext _appcontext;
-        public IAdminRepo admins { get; }
+        public IChatRepo _chat { get; }
 
         public static readonly Dictionary<Type, object> Repositories = new Dictionary<Type, object>();
-        public IDevRepo devs { get; }
         public IGenericRepo<Type> _Generic { get; }
-        public IManagerRepo managers { get; }
-
-        public ITraineeRepo trainees { get; }
-
-        public IDivisionRepo divs { get; }
+       
+        //public IDivisionRepo divs { get; }
 
         public IUserRepo users { get; }
 
       
-        public UnitofWork(AppDbContext appcontext, IAdminRepo adminrepo,
-         IDevRepo devrepo, IManagerRepo managerrepo,IGenericRepo<Type> Generic,ITraineeRepo traineerepo, IDivisionRepo divrepo,IUserRepo userrepo)
+        public UnitofWork(AppDbContext appcontext,
+         IGenericRepo<Type> Generic, IUserRepo userrepo,IChatRepo chat)
         {
             _appcontext = appcontext;
-            admins = adminrepo;
-            devs=devrepo;
-            managers = managerrepo;
-            trainees = traineerepo;
-            divs = divrepo;
+            _chat = chat;
+            
             users = userrepo;
             _Generic = Generic;
-           
+
         }
 
   

@@ -15,29 +15,29 @@ namespace Application.Services
             _gen= gen;
         }
 
-        public Task<T> GetById(int id)
+        public Task<T> Get(int id)
         {
-            throw new NotImplementedException();
+            return _gen.Get(id);
         }
 
-        public Task<IEnumerable<T>> GetAll()
+        public Task<IEnumerable<T>> Get()
         {
-            throw new NotImplementedException();
+           return _gen.Get();
         }
 
-        public Task Add(T Entity)
+        public Task Post(T Entity)
         {
-            throw new NotImplementedException();
+            return _gen.Post(Entity);
         }
 
-        public Task Update(T Entity)
+        public Task Put(T Entity)
         {
-            throw new NotImplementedException();
+            return _gen.Put(Entity);
         }
 
         public Task Delete(T Entity)
         {
-            throw new NotImplementedException();
+            return _gen.Delete(Entity);
         }
     }
 }
