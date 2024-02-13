@@ -21,12 +21,14 @@ using Application.Interfaces.Services.Utlities;
 using Application.Interfaces.Repos.DbConfiguration;
 using Infrastructure.Repositories.DbConfiguration;
 using Domain.Models;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-//builder.Services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
-builder.Services.AddTransient<IMapper, Mapper>();
+builder.Services.AddAutoMapper(typeof(Program), typeof(MappingProfile));
+builder.Services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
+builder.Services.AddTransient<IMappers, Mapper>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IChatRepo,ChatRepo>();
 
@@ -88,6 +90,7 @@ builder.Services.AddDbContext<AppDbContext>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseStaticFiles();
 if (app.Environment.IsDevelopment())
 {
     app.UseRin();

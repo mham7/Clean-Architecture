@@ -7,7 +7,7 @@ using Application.Interfaces.Repos;
 namespace Infrastructure.Repositories
 
 {
-    public abstract class GenericRepo<T>(AppDbContext appcontext) : IGenericRepo<T> where T : class
+    public class GenericRepo<T>(AppDbContext appcontext) : IGenericRepo<T> where T : class
     {
         private readonly AppDbContext _appContext = appcontext;
 

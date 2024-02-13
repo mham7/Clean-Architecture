@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.Services.Utlities
 {
-    public interface IMapper
+    public interface IMappers
     {
         Userdto UserToCredMapper(User cs);
         User RegToUserMapper(UserRegInfo userRegInfo);
+        TDestination Map<TSource, TDestination>(TSource source);
     }
 }

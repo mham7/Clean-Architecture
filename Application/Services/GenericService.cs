@@ -25,7 +25,7 @@ namespace Application.Services
            return _gen.Get();
         }
 
-        public Task Post(T Entity)
+        public Task post(T Entity)
         {
             return _gen.Post(Entity);
         }

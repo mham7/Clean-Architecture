@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces.Repos;
+using Application.Interfaces.Services.Utlities;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -7,12 +9,15 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SuperController<T> : ControllerBase where T : class
+    public class SuperController<T,X> : ControllerBase where T : class where X: class
     {
         private readonly  IGenericServices<T> _gen;
-        public SuperController(IGenericServices<T> gen)
+        private readonly IMapper _mapper;
+
+        public SuperController(IGenericServices<T> gen, IMapper mapper)
         {
             _gen = gen;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -25,17 +30,19 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<T> Get(int id)
         {
-            return await Get(id);
+            return await _gen.Get(id);
         }
 
-       
+
         [HttpPost]
-        public async Task Post(T entity)
+        public virtual async Task<ActionResult<T>> Post([FromBody] X entity)
         {
-             await _gen.Post(entity);
+            T mappedEntity = _mapper.Map<T>(entity);
+            await _gen.post(mappedEntity);
+            return Ok( mappedEntity);
         }
 
-        
+
         [HttpPut("{id}")]
         public async Task<T> Put(T entity)
         {

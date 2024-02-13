@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Interfaces.Repos;
+using AutoMapper;
+using Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class PostImageController : Controller
+    public class PostImageController : SuperController<PostImage, PostImage>
     {
-        public IActionResult Index()
+        public PostImageController(IGenericServices<PostImage> gen, IMapper mapper) : base(gen, mapper)
         {
-            return View();
         }
     }
 }

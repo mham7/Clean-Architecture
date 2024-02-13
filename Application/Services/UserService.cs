@@ -7,6 +7,7 @@ using Application.Interfaces.Repos.Utlities;
 using Application.Interfaces.Services.Utlities;
 using Domain.Models.Dtos;
 using Domain.Models;
+using AutoMapper;
 
 namespace Application.Services
 {
@@ -16,15 +17,15 @@ namespace Application.Services
         private readonly IUnitofWork _unit;
         private readonly IConfiguration _config;
         private readonly IAuthenticator _auth;
-        private readonly IMapper _mapper;
-        public UserService(IUnitofWork unit, IConfiguration config,IAuthenticator auth,IMapper mapper)
+        private readonly IMappers _mapper;
+        public UserService(IUnitofWork unit, IConfiguration config,IAuthenticator auth,IMappers mapper)
         {
             _unit = unit;
             _config = config;   
             _auth = auth;
             _mapper = mapper;
         }
-        public async System.Threading.Tasks.Task Post(User users)
+        public async System.Threading.Tasks.Task post(User users)
         {
            await  _unit.users.Post(users);
         }

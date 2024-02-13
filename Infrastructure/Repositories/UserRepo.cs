@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 
 namespace Infrastructure.Repositories
@@ -36,10 +37,21 @@ namespace Infrastructure.Repositories
             }
         }
 
+        public async Task<List<User>> Get(Expression<Func<User, bool>> filter)
+        {
+            IQueryable<User> users = _appDbContext.Users.Where(filter);
+
+            List<User> filteredUsers = await users.ToListAsync();
+
+            return filteredUsers;
+        }
+
+        
+    
+
         //get all data of user 
         public override async Task<User> Get(int id)
         {
-
             User user = await (from userEntity in _appDbContext.Users
             join role in _appDbContext.Roles on userEntity.RoleId equals role.RoleId
             join div in _appDbContext.Divisions on userEntity.DivId equals div.DivId
@@ -59,10 +71,21 @@ namespace Infrastructure.Repositories
               }).FirstOrDefaultAsync();
 
             return user;
-
         }
 
+        //Update Credentials
+        public async Task<User> Patch(int id, Userdto cred)
+        {
+         
+            User user= await _appDbContext.Users.FindAsync(id);
+            if (user != null) { 
+                if (cred.email != null) { user.Email = cred.email;}
+                if (cred.password != null) { user.Password = cred.password; }
+                return user;
+            }
 
+            else { throw new InvalidOperationException("User not found.");}      
+        }
 
 
     }

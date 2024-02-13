@@ -12,7 +12,7 @@ namespace Application.Interfaces.Repos
 
         Task<T> Get(int id);
         Task<IEnumerable<T>> Get();
-        Task Post(T Entity);
+        Task post(T Entity);
         Task Put(T Entity);
         Task Delete(T Entity);
     }

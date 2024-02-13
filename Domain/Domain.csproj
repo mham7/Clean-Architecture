@@ -10,4 +10,8 @@
     <None Remove="DependencyInjection.cs~RF6f2b59.TMP" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+
 </Project>

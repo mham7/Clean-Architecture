@@ -9,8 +9,14 @@ using System.Threading.Tasks;
 
 namespace Application.Services.Utilities
 {
-    public class Mapper : IMapper
+    public class Mapper : IMappers
     {
+        private readonly AutoMapper.IMapper _autoMapper;
+
+        public Mapper(AutoMapper.IMapper autoMapper)
+        {
+            _autoMapper = autoMapper;
+        }
         public Userdto UserToCredMapper(User cs)
         {
             Userdto Dto = new Userdto
@@ -33,6 +39,24 @@ namespace Application.Services.Utilities
                 DateOfJoining = userRegInfo.DOJ,
             };
             return user;
+        }
+
+        public Tasks TaskMapper(TskDto dto)
+        {
+            Tasks a = new Tasks
+            {
+                TaskDetail = dto.TaskDetail,
+                AssignedId = dto.AssignedID,
+                CreatorId = dto.CreatorID,
+                CreatedTime = dto.CreatedTime,
+                Deadline = dto.Deadline
+            };
+            return a;
+        }
+
+        public TDestination Map<TSource, TDestination>(TSource source)
+        {
+            return _autoMapper.Map<TSource, TDestination>(source);
         }
     }
 }
