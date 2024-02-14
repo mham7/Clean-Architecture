@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Models.Dtos
 {
-    public class ProfilePicDto
+    public class DpDto
     {
-        public IFormFile ProfilePic1 { get; set; }
+        public byte[] ProfilePic1 { get; set; }
         public int UserId { get; set; }
     }
 }

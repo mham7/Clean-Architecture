@@ -19,19 +19,20 @@ namespace Infrastructure.UnitOfWork
         public IMessageRepo message { get; }
         public ITaskRepo tasks { get; }
         public IRoleRepo role { get; }
-
+        public IUserChatRepo _uchat { get; }
         public IPostRepo post { get; }
         public IUserRepo users { get; }
 
       
         public UnitofWork(AppDbContext appcontext,
-         IGenericRepo<Type> Generic, IUserRepo userrepo,IChatRepo chat)
+         IGenericRepo<Type> Generic, IUserRepo userrepo,IChatRepo chat,IMessageRepo messages,IUserChatRepo uchat)
         {
             _appcontext = appcontext;
             _chat = chat;
-            
+            message=messages;
             users = userrepo;
             _Generic = Generic;
+            _uchat = uchat;
 
         }
 

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Models.Dtos
 {
-    internal class PostImageDto
+    public class PostImageDto
     {
+        public Byte[] PostImage { get; set; }
+        public int PostID { get; set; }
     }
 }

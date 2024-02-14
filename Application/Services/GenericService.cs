@@ -15,27 +15,27 @@ namespace Application.Services
             _gen= gen;
         }
 
-        public Task<T> Get(int id)
+        public virtual Task<T> Get(int id)
         {
             return _gen.Get(id);
         }
 
-        public Task<IEnumerable<T>> Get()
+        public virtual Task<IEnumerable<T>> Get()
         {
            return _gen.Get();
         }
 
-        public Task post(T Entity)
+        public virtual Task post(T Entity)
         {
             return _gen.Post(Entity);
         }
 
-        public Task Put(T Entity)
+        public virtual Task Put(T Entity)
         {
             return _gen.Put(Entity);
         }
 
-        public Task Delete(T Entity)
+        public virtual Task Delete(T Entity)
         {
             return _gen.Delete(Entity);
         }

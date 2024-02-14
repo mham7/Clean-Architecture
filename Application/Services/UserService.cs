@@ -9,34 +9,25 @@ using Domain.Models.Dtos;
 using Domain.Models;
 using AutoMapper;
 using System.Linq.Expressions;
+using Application.Interfaces.Repos;
 
 namespace Application.Services
 {
-    public class UserService : IUserService
+    public class UserService :GenericService<User>, IUserService
     {
 
         private readonly IUnitofWork _unit;
         private readonly IConfiguration _config;
         private readonly IAuthenticator _auth;
         private readonly IMappers _mapper;
-        public UserService(IUnitofWork unit, IConfiguration config,IAuthenticator auth,IMappers mapper)
+        public UserService(IGenericRepo<User> gen, IUnitofWork unit, IConfiguration config,IAuthenticator auth,IMappers mapper):base (gen)
         {
             _unit = unit;
             _config = config;   
             _auth = auth;
             _mapper = mapper;
         }
-        public async Task post(User users)
-        {
-           await  _unit.users.Post(users);
-        }
-
-        public async Task Delete(User users)
-        {
-           await _unit.users.Delete(users);
-        }
-
-        //update email and password;
+       
         public async Task<User> Patch(int id,Userdto dto)
         {
             return await _unit.users.Patch(id,dto);
@@ -55,17 +46,9 @@ namespace Application.Services
         //    return result;
         //}
 
-        public async Task<IEnumerable<User>>Get()
-        {
-            return await _unit.users.Get();
-        }
+       
 
-        public async Task<User> Get(int id)
-        {
-            return await _unit.users.Get(id);
-        }
-
-        public async Task<string> Login(Userdto user)
+        public async Task<string> Post(Userdto user)
         { 
             User authuser =await _unit.users.Get(user);
             
@@ -73,31 +56,18 @@ namespace Application.Services
 
         }
 
-        public async Task<Userdto> Register(UserRegInfo user)
+        public async Task<Userdto> Post(UserRegInfo user)
         {
-            try
-            {
+            
                 User auth = _mapper.RegToUserMapper(user);
                 auth = _auth.HashUser(auth);
                 await _unit.users.Post(auth);
                 return _mapper.UserToCredMapper(auth);
-            }
-            catch(Exception ex)
-            {
-                throw;
-            }
+            
 
 
             }
 
-        public async Task Put(User users)
-        {
-           await _unit.users.Put(users);
-        }
-
-        public Task<User> GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

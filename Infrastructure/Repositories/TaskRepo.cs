@@ -4,6 +4,7 @@ using Infrastructure.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,17 +35,14 @@ namespace Infrastructure.Repositories
             await Put(t);
             return t; }
         
-       public async  Task<List<Tasks>> Filter(int id)
+
+        public async Task<List<Tasks>> Get(Expression<Func<Tasks, bool>> filter)
         {
-            List<Tasks> a= await _context.Tasks.Where(u=>u.AssignedId == id).ToListAsync();
-            return a;
+            return await _context.Tasks.Where(filter).ToListAsync();
         }
 
-        public async Task<List<Tasks>>GetCreatedTasks(int id)
-        {
-            List<Tasks> a = await _context.Tasks.Where(u => u.CreatorId == id).ToListAsync();
-            return a;
-        }
+       
+       
 
     }
 }

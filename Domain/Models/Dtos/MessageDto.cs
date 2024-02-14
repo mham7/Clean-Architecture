@@ -11,7 +11,7 @@ namespace Domain.Models.Dtos
     {
         [Required]public int senderID {  get; set; }
        [Required]public int recieverID { get; set; }
-       [Required]public string message { get; set; }
+       [Required]public string MessageDetail { get; set; }
 
     }
 }

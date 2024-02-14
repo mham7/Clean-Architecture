@@ -26,7 +26,7 @@ namespace Contouring_App.Presentation.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<ActionResult<User>> SigninUser([FromBody] Userdto div)
+        public async Task<ActionResult<User>> Post([FromBody] Userdto div)
         {
             if (div == null)
             {
@@ -34,7 +34,7 @@ namespace Contouring_App.Presentation.Controllers
             }
             else
             {
-                return Ok( await _userService.Login(div));
+                return Ok( await _userService.Post(div));
 
             }
         }
@@ -50,7 +50,7 @@ namespace Contouring_App.Presentation.Controllers
             }
             else
             {
-               return Ok (await _userService.Register(div));
+               return Ok (await _userService.Post(div));
                 
             }
         }

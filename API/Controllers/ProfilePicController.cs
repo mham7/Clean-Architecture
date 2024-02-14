@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Repos;
+using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Models;
 using Domain.Models.Dtos;
@@ -15,20 +16,20 @@ namespace API.Controllers
     {
         private readonly IGenericServices<ProfilePic> _gen;
         private readonly IMapper _mapper;
-        public ProfilePicController(IGenericServices<ProfilePic> gen, IMapper mapper) : base(gen, mapper)
+        private readonly IProfilePicService _prof;
+        public ProfilePicController(IGenericServices<ProfilePic> gen, IMapper mapper,IProfilePicService prof) : base(gen, mapper)
         {
             _mapper = mapper;
             _gen = gen;
+            _prof = prof;
         }
 
         [HttpPost("UploadImage")]
         [AllowAnonymous]
         public override async Task<ActionResult<ProfilePic>> Post([FromForm] ProfilePicDto a)
         {
-            ProfilePic mappedEntity = _mapper.Map<ProfilePic>(a);
-            await _gen.post(mappedEntity);
-            return Ok(mappedEntity);
-
+            ProfilePic v=await _prof.Post(a);
+            return v;
 
         }
     }

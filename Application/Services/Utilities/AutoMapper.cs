@@ -26,6 +26,8 @@ namespace Application.Services.Utilities
             CreateMap<RoleDto, Role>();
             CreateMap<Division, DivDto>();
             CreateMap<DivDto, Division>();
+            CreateMap<Message, MessageDto>();
+            CreateMap<MessageDto, Message>();
 
 
         }

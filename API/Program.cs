@@ -31,6 +31,8 @@ builder.Services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
 builder.Services.AddTransient<IMappers, Mapper>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IChatRepo,ChatRepo>();
+builder.Services.AddScoped<IUserChatRepo, UserChatRepo>();
+builder.Services.AddScoped<IMessageRepo, MessageRepo>();
 
 builder.Services.AddTransient<IAuthenticator, Authenticator>();
 // Unit of Work
@@ -39,6 +41,10 @@ builder.Services.AddScoped<IUnitofWork, UnitofWork>();
 //Services
 builder.Services.AddScoped(typeof(IGenericServices<>), typeof(GenericService<>));
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IHelper, Helpercs>();
+builder.Services.AddScoped<IProfilePicService, ProfilePicService>();
+builder.Services.AddScoped<IMessagingService, MessagingService>();
 
 builder.Logging.AddRinLogger(); 
 builder.Services.AddRin();

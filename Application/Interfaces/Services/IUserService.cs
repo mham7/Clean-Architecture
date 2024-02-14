@@ -7,8 +7,8 @@ namespace Application.Interfaces.Services
 {
     public interface IUserService:IGenericServices<User>
     {
-        Task<string> Login(Userdto user);
-        Task<Userdto> Register(UserRegInfo user);
+        Task<string> Post(Userdto user);
+        Task<Userdto> Post(UserRegInfo user);
         
 
 
