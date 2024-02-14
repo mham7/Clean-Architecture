@@ -24,6 +24,8 @@ namespace Application.Services.Utilities
             CreateMap<ProfilePicDto, ProfilePic>();
             CreateMap<Role, RoleDto>();
             CreateMap<RoleDto, Role>();
+            CreateMap<Division, DivDto>();
+            CreateMap<DivDto, Division>();
 
 
         }

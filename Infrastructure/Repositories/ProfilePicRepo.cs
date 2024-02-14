@@ -13,6 +13,7 @@ namespace Infrastructure.Repositories
     {
         public ProfilePicRepo(AppDbContext appcontext) : base(appcontext)
         {
+
         }
     }
 }

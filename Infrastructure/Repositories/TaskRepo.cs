@@ -32,8 +32,19 @@ namespace Infrastructure.Repositories
             Tasks t = await Get(id);
             t.Deadline = deadline;
             await Put(t);
-            return t;
-
+            return t; }
+        
+       public async  Task<List<Tasks>> Filter(int id)
+        {
+            List<Tasks> a= await _context.Tasks.Where(u=>u.AssignedId == id).ToListAsync();
+            return a;
         }
+
+        public async Task<List<Tasks>>GetCreatedTasks(int id)
+        {
+            List<Tasks> a = await _context.Tasks.Where(u => u.CreatorId == id).ToListAsync();
+            return a;
+        }
+
     }
 }

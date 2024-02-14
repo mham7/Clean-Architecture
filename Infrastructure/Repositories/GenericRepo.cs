@@ -7,10 +7,13 @@ using Application.Interfaces.Repos;
 namespace Infrastructure.Repositories
 
 {
-    public class GenericRepo<T>(AppDbContext appcontext) : IGenericRepo<T> where T : class
+    public class GenericRepo<T> : IGenericRepo<T> where T : class
     {
-        private readonly AppDbContext _appContext = appcontext;
-
+        private readonly AppDbContext _appContext;
+        public GenericRepo(AppDbContext appcontext)
+        {
+            _appContext = appcontext;
+        }
         public virtual async Task<T> Get(int id)
         {
             T entity = await  _appContext.Set<T>().FindAsync(id);

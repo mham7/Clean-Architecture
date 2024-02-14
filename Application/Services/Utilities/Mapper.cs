@@ -35,8 +35,10 @@ namespace Application.Services.Utilities
                 LastName = userRegInfo.LastName,
                 Email = userRegInfo.Email,
                 Password = userRegInfo.Password,
+                DivId=userRegInfo.DivId,
+                RoleId=userRegInfo.RoleId,
                 Salary = userRegInfo.Salary,
-                DateOfJoining = userRegInfo.DOJ,
+                DateOfJoining = userRegInfo.DateOfJoinig,
             };
             return user;
         }

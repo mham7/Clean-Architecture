@@ -8,6 +8,7 @@ using Application.Interfaces.Services.Utlities;
 using Domain.Models.Dtos;
 using Domain.Models;
 using AutoMapper;
+using System.Linq.Expressions;
 
 namespace Application.Services
 {
@@ -25,17 +26,36 @@ namespace Application.Services
             _auth = auth;
             _mapper = mapper;
         }
-        public async System.Threading.Tasks.Task post(User users)
+        public async Task post(User users)
         {
            await  _unit.users.Post(users);
         }
 
-        public async System.Threading.Tasks.Task Delete(User users)
+        public async Task Delete(User users)
         {
            await _unit.users.Delete(users);
         }
 
-        public async Task<IEnumerable<User>> Get()
+        //update email and password;
+        public async Task<User> Patch(int id,Userdto dto)
+        {
+            return await _unit.users.Patch(id,dto);
+        }
+
+        //public async Task<List<User>>Get()
+        //{
+        //    DateOnly sixMonthsAgo = DateOnly.FromDateTime(DateTime.Today.AddMonths(-6));
+
+        //    // Create a filter expression to get users with DateOfJoining more than 6 months ago
+        //    Expression<Func<User, bool>> filter = u => u.DateOfJoining < sixMonthsAgo;
+
+        //    // Call the Get method with the filter
+        //    List<User> result = await Get(filter);
+
+        //    return result;
+        //}
+
+        public async Task<IEnumerable<User>>Get()
         {
             return await _unit.users.Get();
         }
@@ -70,7 +90,7 @@ namespace Application.Services
 
             }
 
-        public async System.Threading.Tasks.Task Put(User users)
+        public async Task Put(User users)
         {
            await _unit.users.Put(users);
         }

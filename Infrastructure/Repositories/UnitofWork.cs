@@ -14,9 +14,6 @@ namespace Infrastructure.UnitOfWork
 
         public static readonly Dictionary<Type, object> Repositories = new Dictionary<Type, object>();
         public IGenericRepo<Type> _Generic { get; }
-       
-        public IDivisionRepo divs { get; }
-
         public ICommunityRepo community { get; }
         public IChatRepo chat { get; }  
         public IMessageRepo message { get; }

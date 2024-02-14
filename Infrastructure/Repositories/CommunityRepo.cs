@@ -13,6 +13,7 @@ namespace Infrastructure.Repositories
     {
         public CommunityRepo(AppDbContext appcontext) : base(appcontext)
         {
+
         }
     }
 }

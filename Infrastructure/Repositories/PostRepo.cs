@@ -13,6 +13,7 @@ namespace Infrastructure.Repositories
     {
         public PostRepo(AppDbContext appcontext) : base(appcontext)
         {
+
         }
     }
 }

@@ -46,8 +46,20 @@ namespace Infrastructure.Repositories
             return filteredUsers;
         }
 
-        
-    
+        public virtual async Task<IEnumerable<User>> Get()
+        {
+            var users = await _appDbContext.Users
+                .Include(u => u.Div) // Include the Div navigation property
+                .ToListAsync();
+
+            foreach (var user in users)
+            {
+                // Explicitly load additional related entities if needed
+                _appDbContext.Entry(user);
+            }
+
+            return users ?? throw new Exception("Data is null");
+        }
 
         //get all data of user 
         public override async Task<User> Get(int id)

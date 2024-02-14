@@ -12,9 +12,9 @@ namespace Domain.Models.Dtos
         public required string LastName { get; set; }
         public required string Email { get; set; }
         public required string Password { get; set; }
-        public required string DivName { get; set; }
-        public required string Role { get; set; }
-        public required DateOnly DOJ { get; set; }
+        public required int DivId { get; set; }
+        public required int RoleId { get; set; }
+        public required DateOnly DateOfJoinig { get; set; }
         public int Salary { get; set; }
     }
 }

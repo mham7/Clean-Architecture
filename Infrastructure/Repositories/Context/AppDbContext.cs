@@ -19,13 +19,13 @@ namespace Infrastructure.Context
             optionsBuilder.UseSqlServer(_DbConfig.ConnectionString);
         }
 
-
+        
 
         public DbSet<Chats> Chat { get; set; }
 
         public DbSet<Community> Communities { get; set; }
 
-        public DbSet<Domain.Models.Division> Divisions { get; set; }
+        public DbSet<Division> Divisions { get; set; }
 
         public DbSet<Message> Messages { get; set; }
 

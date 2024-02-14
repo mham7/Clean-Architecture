@@ -38,11 +38,6 @@ public partial class User
     [Column("DivID")]
     public int DivId { get; set; }
 
-    //[InverseProperty("Reciever")]
-    //public virtual ICollection<Chats> ChatRecievers { get; set; } = new List<Chats>();
-
-    //[InverseProperty("Sender")]
-    //public virtual ICollection<Chats> ChatSenders { get; set; } = new List<Chats>();
 
     [ForeignKey("DivId")]
     [InverseProperty("Users")]
