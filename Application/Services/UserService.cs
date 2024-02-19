@@ -45,7 +45,10 @@ namespace Application.Services
 
         //    return result;
         //}
-
+        public override async Task<User> Get(int id)
+        {
+            return await _unit.users.Get(id);
+        } 
        
 
         public async Task<string> Post(Userdto user)

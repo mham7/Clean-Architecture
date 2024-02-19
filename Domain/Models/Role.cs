@@ -13,6 +13,7 @@ public partial class Role
     [Column("RoleID")]
     public int RoleId { get; set; }
 
+    [Required]
     [StringLength(250)]
     public string? RoleName { get; set; }
 

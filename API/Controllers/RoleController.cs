@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repos;
+﻿using API.Filters;
+using Application.Interfaces.Repos;
 using AutoMapper;
 using Domain.Models;
 using Domain.Models.Dtos;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
+    [ServiceFilter(typeof(ValidationFilter))]
     [ApiController]
     public class RoleController : SuperController<Role, RoleDto>
     {

@@ -11,12 +11,15 @@ public partial class Message
     [Column("MessageID")]
     public int MessageId { get; set; }
 
+    [Required]
     [Column(TypeName = "datetime")]
     public DateTime? CreatedTime { get; set; }
 
+    [Required]
     [Column("ChatID")]
     public int ChatId { get; set; }
 
+    [Required]
     [Column(TypeName = "text")]
     public string MessageDetail { get; set; } = null!;
 

@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
 
         public async Task<List<User>> Get(Expression<Func<User, bool>> filter)
         {
-            IQueryable<User> users = _appDbContext.Users.Where(filter);
+            IQueryable<User> users = _appDbContext.Users.Include(u=>u.Div).Include(u=>u.Role).Where(filter);
 
             List<User> filteredUsers = await users.ToListAsync();
 

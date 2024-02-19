@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repos;
+﻿using API.Filters;
+using Application.Interfaces.Repos;
 using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Models;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
+    [ServiceFilter(typeof(ValidationFilter))]
     [ApiController]
     public class MessageController : SuperController<Message, Message>
     {
@@ -21,14 +23,10 @@ namespace API.Controllers
         [HttpPost("SendMessage")]
         public async Task<ActionResult<Message>> Post(MessageDto a)
         {
-            try
-            {
+          
                return Ok(await _msg.Post(a));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            
+            
         }
 
         [HttpGet("GetChat")]

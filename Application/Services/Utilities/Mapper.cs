@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Application.Services.Utilities
 {
-    public class Mapper : IMappers
+    public class Mappers : IMappers
     {
         private readonly AutoMapper.IMapper _autoMapper;
 
-        public Mapper(AutoMapper.IMapper autoMapper)
+        public Mappers(AutoMapper.IMapper autoMapper)
         {
             _autoMapper = autoMapper;
         }

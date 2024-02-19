@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repos;
+﻿using API.Filters;
+using Application.Interfaces.Repos;
 using Application.Interfaces.Services.Utlities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
+    [ServiceFilter(typeof(ExceptionFilter))]
+    [ServiceFilter(typeof(ValidationFilter))]
     [ApiController]
     public class SuperController<T,X> : ControllerBase where T : class where X: class
     {
@@ -28,7 +31,7 @@ namespace API.Controllers
 
         
         [HttpGet("{id}")]
-        public async Task<T> Get(int id)
+        public virtual async Task<T> Get(int id)
         {
             return await _gen.Get(id);
         }

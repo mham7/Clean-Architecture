@@ -12,6 +12,7 @@ public partial class Division
     [Column("DivID")]
     public int DivId { get; set; }
 
+    [Required]
     [StringLength(250)]
     public string? DivName { get; set; }
 

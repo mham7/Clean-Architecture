@@ -14,18 +14,22 @@ public partial class User
 
     [StringLength(250)]
 
+    [Required]
     public string FirstName { get; set; } = null!;
 
     [StringLength(250)]
 
+    [Required]
     public string LastName { get; set; } = null!;
 
     [StringLength(250)]
 
+    [Required]
     public string Email { get; set; } = null!;
 
     [StringLength(250)]
-    
+
+    [Required]
     public string Password { get; set; } = null!;
 
     public DateOnly DateOfJoining { get; set; }

@@ -12,12 +12,12 @@ namespace Domain.Models.Dtos
     {
         
         public int CommentId { get; set; }
-        public string CommentDetail { get; set; } = null!;
+       [Required] public string CommentDetail { get; set; } = null!;
 
-        public int CreatorId { get; set; }
+       [Required] public int CreatorId { get; set; }
 
-        public int PostId { get; set; }
+        [Required]public int PostId { get; set; }
 
-        public DateTime CreatedTime { get; set; }=DateTime.Now;
+       [Required] public DateTime CreatedTime { get; set; }=DateTime.Now;
     }
 }

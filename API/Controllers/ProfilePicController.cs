@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repos;
+﻿using API.Filters;
+using Application.Interfaces.Repos;
 using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Models;
@@ -11,6 +12,7 @@ using Microsoft.Identity.Client;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
+    [ServiceFilter(typeof(ValidationFilter))]
     [ApiController]
     public class ProfilePicController : SuperController<ProfilePic, ProfilePicDto>
     {

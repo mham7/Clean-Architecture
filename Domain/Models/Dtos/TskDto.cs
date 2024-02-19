@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Common;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Models.Dtos
@@ -8,6 +9,9 @@ namespace Domain.Models.Dtos
         [Required]
         public string TaskDetail { get; set; }
 
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Compare(nameof(Deadline), ErrorMessage = MagicString.DateMessage)]
         public DateTime Deadline { get; set; }
 
         [Required]
