@@ -8,6 +8,7 @@ namespace API.Filters
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {
+            
             if(!context.ModelState.IsValid)
             {
                 context.Result = new BadRequestObjectResult(context.ModelState);

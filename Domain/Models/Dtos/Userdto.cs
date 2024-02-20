@@ -6,11 +6,12 @@ namespace Domain.Models.Dtos
     {
         
         [Required]
-        [RegularExpression(ValidRegex.EmailValidator, ErrorMessage = MagicString.EmailMessage)]
+        //[RegularExpression(ValidRegex.EmailValidator, ErrorMessage = MagicString.EmailMessage)]
         [DataType(DataType.EmailAddress)]
         public string email { get; set; }
+
         [Required]
-        [RegularExpression(ValidRegex.PasswordValidator, ErrorMessage = MagicString.PasswordMessage)]
+        //[RegularExpression(ValidRegex.PasswordValidator, ErrorMessage = MagicString.PasswordMessage)]
         [DataType(DataType.Password)]
         public string password { get; set; }
     }

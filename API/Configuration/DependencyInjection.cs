@@ -55,8 +55,8 @@ namespace API.DependencyInjection
         public static IServiceCollection AddAPI(this IServiceCollection services,IConfiguration config)
         {
             
-            services.AddScoped<ExceptionFilter>();
-            services.AddScoped<ValidationFilter>();
+            services.AddSingleton<ExceptionFilter>();
+            services.AddSingleton<ValidationFilter>();
             config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")

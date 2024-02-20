@@ -18,10 +18,10 @@ namespace Domain.Models.Dtos
 
         [Required]
         [DataType(DataType.EmailAddress)]
-        //[EmailAddress(ErrorMessage = MagicString.EmailMessage)]
         public required string Email { get; set; }
+
         [Required]
-        [MinLength(6)]
+        [DataType(DataType.EmailAddress)]
         public required string Password { get; set; }
         [Required]
         public required int DivId { get; set; }

@@ -12,6 +12,7 @@ using Microsoft.Identity.Client;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
+    [ServiceFilter(typeof(ExceptionFilter))]
     [ServiceFilter(typeof(ValidationFilter))]
     [ApiController]
     public class ProfilePicController : SuperController<ProfilePic, ProfilePicDto>
