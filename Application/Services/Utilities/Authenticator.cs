@@ -21,6 +21,12 @@ namespace Application.Services.Utilities
             user.Password =BCrypt.Net.BCrypt.HashPassword(user.Password);
             return user;
         }
+
+        public Userdto HashUser(Userdto user)
+        {
+            user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
+            return user;
+        }
         public bool Verification(string cred_password,string actual_password)
         {
 
@@ -39,7 +45,8 @@ namespace Application.Services.Utilities
                 var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
                 List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier,user.FirstName,user.LastName,user.Email),
+                new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString(),user.RoleId.ToString()),
+                new Claim(ClaimTypes.Email,user.Email ),
             };
                 var token = new JwtSecurityToken(
                     claims: claims,

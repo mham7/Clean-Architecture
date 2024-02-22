@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Infrastructure.Context;
 
 using Application.Interfaces.Repos;
+using Domain.Common;
 
 namespace Infrastructure.Repositories
 
@@ -17,13 +18,13 @@ namespace Infrastructure.Repositories
         public virtual async Task<T> Get(int id)
         {
             T entity = await  _appContext.Set<T>().FindAsync(id);
-            return entity ?? throw new Exception("Data is nulll");
+            return entity ?? throw new Exception(MagicString.NullData);
         }
 
         public virtual async Task<IEnumerable<T>> Get()
         {
             IEnumerable<T> all_data = await _appContext.Set<T>().ToListAsync();
-            return all_data ?? throw new Exception("Data is nulll");
+            return all_data ?? throw new Exception(MagicString.NullData);
         }
 
         public virtual async Task Post(T entity)

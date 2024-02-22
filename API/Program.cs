@@ -9,7 +9,7 @@ builder.Services.AddInfrastructure(builder.Configuration)
 
 Log.Logger = new LoggerConfiguration()
          .WriteTo.Console()
-         .WriteTo.Seq("http://localhost:7252")
+         .WriteTo.Seq("http://localhost:5194")
          .CreateLogger();
 
 

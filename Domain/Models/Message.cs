@@ -8,6 +8,7 @@ namespace Domain.Models;
 public partial class Message
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("MessageID")]
     public int MessageId { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Repos;
 using Application.Interfaces.Repos.Utlities;
+using Domain.Common;
 using Domain.Models;
 using Domain.Models.Dtos;
 using Infrastructure.Context;
@@ -33,7 +34,7 @@ namespace Infrastructure.Repositories
             }
             else
             {
-                throw new InvalidOperationException("User not found or invalid password.");
+                throw new InvalidOperationException(MagicString.NotFound);
             }
         }
 
@@ -49,16 +50,10 @@ namespace Infrastructure.Repositories
         public virtual async Task<IEnumerable<User>> Get()
         {
             var users = await _appDbContext.Users
-                .Include(u => u.Div) // Include the Div navigation property
+                .Include(u => u.Div) 
                 .ToListAsync();
 
-            foreach (var user in users)
-            {
-                // Explicitly load additional related entities if needed
-                _appDbContext.Entry(user);
-            }
-
-            return users ?? throw new Exception("Data is null");
+            return users ?? throw new Exception(MagicString.NotFound);
         }
 
         //get all data of user 
@@ -86,17 +81,19 @@ namespace Infrastructure.Repositories
         }
 
         //Update Credentials
-        public async Task<User> Patch(int id, Userdto cred)
+        public async Task<string> Patch(int id, Userdto cred)
         {
          
             User user= await _appDbContext.Users.FindAsync(id);
             if (user != null) { 
                 if (cred.email != null) { user.Email = cred.email;}
                 if (cred.password != null) { user.Password = cred.password; }
-                return user;
+
+                await Put(user);
+                return MagicString.UpdateSucess;
             }
 
-            else { throw new InvalidOperationException("User not found.");}      
+            else { return MagicString.NotFound; }      
         }
 
 

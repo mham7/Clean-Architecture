@@ -12,13 +12,13 @@ public partial class UserChat
     public int UserChatsId { get; set; }
 
     [Column("ChatID")]
-    public int? ChatId { get; set; }
+    public int ChatId { get; set; }
 
     [Column("SenderID")]
-    public int? SenderId { get; set; }
+    public int SenderId { get; set; }
 
     [Column("RecieverID")]
-    public int? RecieverId { get; set; }
+    public int RecieverId { get; set; }
 
     [ForeignKey("ChatId")]
     [InverseProperty("UserChats")]

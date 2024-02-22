@@ -10,15 +10,16 @@ using Domain.Models;
 using API.Controllers;
 using AutoMapper;
 using API.Filters;
+using System.Security.Claims;
 
 namespace Contouring_App.Presentation.Controllers
 {
    
     [Route("api/[controller]")]
-    [ServiceFilter(typeof(ExceptionFilter))]
-    [ServiceFilter(typeof(ValidationFilter))]
+    [ValidationFilter]
+    [GlobalExceptionFilter]
     [Authorize]
-    public class UsersController: SuperController<User,UserRegInfo>
+    public class UsersController: SuperController<User,UserInfo>
     {
         private readonly IUserService _userService;
 
@@ -52,7 +53,7 @@ namespace Contouring_App.Presentation.Controllers
 
         [HttpPost("Register")]
         [AllowAnonymous]
-        public override async Task<ActionResult<User>> Post([FromBody]UserRegInfo div)
+        public async Task<ActionResult<User>> Post([FromBody]UserRegInfo div)
         {
             if (div == null)
             {
@@ -65,14 +66,21 @@ namespace Contouring_App.Presentation.Controllers
             }
         }
 
+
+
         [HttpGet("Details/{id}")]
         public  async Task<ActionResult<User>>Get(int id)
         {
             return await _userService.Get(id);
         }
 
-
-
+        [HttpPatch("UpdateInfo")]
+        public async Task<ActionResult<string>> patch(Userdto cred)
+        {
+             var userclaim=User.FindFirst(ClaimTypes.NameIdentifier);
+            int userId = int.Parse(userclaim.Value);
+            return await _userService.Patch(userId, cred);
+        }
 
     }
 }

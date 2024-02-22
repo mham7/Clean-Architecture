@@ -9,7 +9,8 @@ namespace Application.Interfaces.Services
     {
         Task<string> Post(Userdto user);
         Task<Userdto> Post(UserRegInfo user);
-        
+        Task<string> Patch(int id,Userdto cred);
+        Task<string> get(int id);
 
 
     }

@@ -28,7 +28,7 @@ namespace Application.Services
             _mapper = mapper;
         }
        
-        public async Task<User> Patch(int id,Userdto dto)
+        public async Task<string> Patch(int id,Userdto dto)
         {
             return await _unit.users.Patch(id,dto);
         }
@@ -49,7 +49,12 @@ namespace Application.Services
         {
             return await _unit.users.Get(id);
         } 
-       
+        
+        public async Task<string> get(int id)
+        {
+            User u=await _unit.users.Get(id);
+            return u.FirstName;
+        }
 
         public async Task<string> Post(Userdto user)
         { 
@@ -71,6 +76,13 @@ namespace Application.Services
 
             }
 
-        
+       public async Task<string> patch(int id,Userdto cred)
+        {
+            cred = _auth.HashUser(cred);
+            return await _unit.users.Patch(id, cred);
+
+        }
+
+
     }
 }

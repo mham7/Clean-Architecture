@@ -11,7 +11,6 @@ namespace Application.Interfaces.UnitOfWork
         IGenericRepo<Type> _Generic { get; }
         public IChatRepo _chat { get; }
         public ICommunityRepo community { get; }
-        public IChatRepo chat { get; }
         public IUserChatRepo _uchat { get; }
         public IMessageRepo message { get; }
         public ITaskRepo tasks { get; }

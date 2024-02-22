@@ -14,6 +14,7 @@ namespace Application.Interfaces.Repos.Utlities
     public interface IAuthenticator
     {
         User HashUser(User user);
+        Userdto HashUser(Userdto user);
         bool Verification(string cred_password, string actual_password);
         string Tokenization(User user, IConfiguration _config,Userdto actual);
     }

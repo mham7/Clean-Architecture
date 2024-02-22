@@ -44,6 +44,7 @@ namespace API.DependencyInjection
             services.AddScoped(typeof(IGenericServices<>), typeof(GenericService<>));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IUserChatService, UserChatService>();
             services.AddScoped<IHelper, Helpercs>();
             services.AddScoped<IProfilePicService, ProfilePicService>();
             services.AddScoped<IMessagingService, MessagingService>();
@@ -54,9 +55,7 @@ namespace API.DependencyInjection
 
         public static IServiceCollection AddAPI(this IServiceCollection services,IConfiguration config)
         {
-            
-            services.AddSingleton<ExceptionFilter>();
-            services.AddSingleton<ValidationFilter>();
+
             config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
@@ -81,10 +80,10 @@ namespace API.DependencyInjection
                 };
                 });
 
-            services.AddControllers(options =>
+            services.AddControllers(config =>
             {
-                options.Filters.Add<ExceptionFilter>();
-                options.Filters.Add<ValidationFilter>();
+                config.Filters.Add(new GlobalExceptionFilter());
+                config.Filters.Add(new ValidationFilter());
 
             }
 

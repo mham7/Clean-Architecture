@@ -11,5 +11,6 @@ namespace Application.Interfaces.Repos
     public interface IUserChatRepo :  IGenericRepo<UserChat>
     {
         Task<UserChat> Get(Expression<Func<UserChat, bool>> filter);
+        Task<List<UserChat>> get(int id);
     }
 }

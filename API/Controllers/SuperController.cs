@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    [ServiceFilter(typeof(ExceptionFilter))]
-    [ServiceFilter(typeof(ValidationFilter))]
+    [ValidationFilter]
+    [GlobalExceptionFilter]
     [ApiController]
     public class SuperController<T,X> : ControllerBase where T : class where X: class
     {
@@ -24,7 +24,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<T>> Get()
+        public virtual async Task<IEnumerable<T>> Get()
         {
             return await _gen.Get();
         }
@@ -47,17 +47,17 @@ namespace API.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<T> Put(T entity)
+        public async Task<T> Put([FromBody] X entity)
         {
-            
-            await _gen.Put(entity);
-            return entity;
+            T mappedEntity = _mapper.Map<T>(entity);
+            await _gen.Put(mappedEntity);
+            return mappedEntity;
 
         }
 
         
         [HttpDelete("{id}")]
-        public async Task<T> Delete(int id)
+        public virtual async Task<T> Delete(int id)
         {
             T entity = await _gen.Get(id);
             await _gen.Delete(entity);

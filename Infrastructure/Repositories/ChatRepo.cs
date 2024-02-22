@@ -17,6 +17,14 @@ namespace Infrastructure.Repositories
         {
             _appcontext = appcontext;
         }
+
+        public async Task<List<UserChat>> get(int id)
+        {
+            List<UserChat> chats = await _appcontext.UserChats
+           .Where(u => u.SenderId == id || u.RecieverId==id)
+           .ToListAsync();
+            return chats;
+        }
         
     }
 }

@@ -15,29 +15,25 @@ namespace Application.Services
     public class ChatService:GenericService<Chats>,IChatService
     {
         private readonly IUnitofWork _unit;
-     
-        public ChatService(IGenericRepo<Chats> gen, IUnitofWork unit) : base(gen)
+        private readonly IUserService _user;
+        private readonly IProfilePicService _profile;
+        //private readonly IMessagingService _messaging;
+        public ChatService(IGenericRepo<Chats> gen, IUnitofWork unit, IUserService user,IProfilePicService profile) : base(gen)
         {
             _unit = unit;
+            _user = user;
+            _profile = profile;
+            //_messaging = messaging;
         }
 
+       
         public async Task<Chats> Post(DateTime a)
         {
-            Chats b = new Chats { CreatedTime = a };
+            Chats b = new() { CreatedTime = a };
             await _unit._chat.Post(b);
-            //if (chat == null)
-            //{
-            //    Chats b = new Chats { ChatId = 1, CreatedTime = a };
-            //    await _unit.chat.Post(b);
-            //    return b;
-            //}
-            //else
-            //{
-            //    int maxId = chat.Max(c => c.ChatId);
-            //    maxId++;
-            //    Chats b = new Chats { ChatId = maxId, CreatedTime = a };
-            //    await _unit.chat.Post(b);
             return b;
             }
-        }
+
+       
+    }
     }

@@ -4,21 +4,15 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace API.Filters
 {
-    public class ValidationFilter : IActionFilter
+    public class ValidationFilter : ActionFilterAttribute
     {
-        public void OnActionExecuted(ActionExecutedContext context)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
-            
-            if(!context.ModelState.IsValid)
+            if (!context.ModelState.IsValid)
             {
                 context.Result = new BadRequestObjectResult(context.ModelState);
-                
-            }
-        }
 
-        public void OnActionExecuting(ActionExecutingContext context)
-        {
-            
+            }
         }
     }
 }

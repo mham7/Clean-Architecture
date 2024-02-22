@@ -18,10 +18,11 @@ namespace Domain.Models.Dtos
 
         [Required]
         [DataType(DataType.EmailAddress)]
+        [CustomEmailValidation(ErrorMessage = "Invalid email address")]
         public required string Email { get; set; }
 
         [Required]
-        [DataType(DataType.EmailAddress)]
+        [DataType(DataType.Password)]
         public required string Password { get; set; }
         [Required]
         public required int DivId { get; set; }

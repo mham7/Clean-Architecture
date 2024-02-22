@@ -11,9 +11,6 @@ namespace Application.Interfaces.Services
 {
     public interface IMessagingService:IGenericServices<Message>
     {
-        Task<Message> Post(MessageDto dto);
-        Task<List<Message>> Get(int Chatid);
-
-
+        Task<List<Message>> GetInbox(int Chatid);
     }
 }

@@ -21,6 +21,8 @@ namespace Application.Services
         private readonly IChatService _chat;
         private readonly IGenericServices<UserChat> _uchat;
         private readonly IMessageRepo _messageRepo;
+
+        
         public MessagingService(IGenericRepo<Message> gen,IGenericServices<UserChat> uchat, IChatService chat,IUnitofWork unit, IMapper mapper,IMessageRepo messageRepo) : base(gen)
         {
             _unit = unit; _mapper = mapper; 
@@ -30,33 +32,7 @@ namespace Application.Services
 
         }
 
-        public async Task<Message> Post(MessageDto dto)
-        {
-            Message msg = _mapper.Map<Message>(dto);
-            msg.CreatedTime= DateTime.Now;
-            msg.IsRead = false;
-            Expression<Func<UserChat, bool>> filter = u => (u.SenderId == dto.senderID && u.RecieverId == dto.recieverID) || (u.SenderId == dto.recieverID && u.RecieverId == dto.senderID);
-            UserChat a= await _unit._uchat.Get(filter);
-
-            if (a == null)
-            {
-               Chats c= await _chat.Post(DateTime.Now);
-                msg.ChatId = c.ChatId;
-                await _unit.message.Post(msg);
-                UserChat s=new UserChat { ChatId=c.ChatId,SenderId=dto.senderID,RecieverId=dto.recieverID};
-                await _uchat.post(s);
-                
-            }
-            else
-            {
-                msg.ChatId = (int)a.ChatId;
-                await _unit.message.Post(msg);
-            }
-
-            return msg;
-        }
-
-       public async Task<List<Message>> Get(int Chatid)
+       public async Task<List<Message>> GetInbox(int Chatid)
         {
             Expression<Func<Message, bool>> filter=u=>u.ChatId == Chatid;
             List<Message>a= await _messageRepo.Get(filter);

@@ -7,7 +7,7 @@ using System.Net;
 using Serilog;
 namespace API.Filters
 {
-    public class ExceptionFilter:ExceptionFilterAttribute
+    public class GlobalExceptionFilter:ExceptionFilterAttribute
     {
         
         public override void OnException(ExceptionContext context)

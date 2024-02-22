@@ -24,7 +24,6 @@ namespace Infrastructure.Repositories
         //    List<Message> messages=await _appDbContext.Messages.Where(c=>c.ChatId == chatId).OrderByDescending(m => m.CreatedTime).ToListAsync();
         //    return messages;
         //}
-
         public async Task<List<Message>> Get(Expression<Func<Message, bool>> filter)
         {
             IQueryable<Message> msg = _appDbContext.Messages.Where(filter);

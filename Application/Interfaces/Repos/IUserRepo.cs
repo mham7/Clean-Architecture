@@ -9,6 +9,6 @@ namespace Application.Interfaces.Repos
     {
         Task<User> Get(Userdto cred);
         Task<List<User>> Get(Expression<Func<User, bool>> filter);
-        Task<User> Patch(int id, Userdto cred);
+        Task<string> Patch(int id, Userdto cred);
     }
 }

@@ -6,8 +6,8 @@ namespace Domain.Models.Dtos
     {
         
         [Required]
-        //[RegularExpression(ValidRegex.EmailValidator, ErrorMessage = MagicString.EmailMessage)]
         [DataType(DataType.EmailAddress)]
+        [CustomEmailValidation(ErrorMessage = "Invalid email address")]
         public string email { get; set; }
 
         [Required]

@@ -14,5 +14,8 @@ namespace Domain.Common
         public const string BadRequest = "Sorry something went wrong, request cannot be completed";
         public const string ServerError = "Internal Server Error";
         public const string UnhandleError = "An Unhandled Error has occured";
+        public const string NotFound = "Not Found";
+        public const string UpdateSucess = "Update Success";
+        public const string NullData = "Data is Null";
     }
 }

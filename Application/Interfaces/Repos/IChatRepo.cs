@@ -9,5 +9,6 @@ namespace Application.Interfaces.Repos
 {
     public interface IChatRepo : IGenericRepo<Chats>
     {
+        Task<List<UserChat>> get(int id);
     }
 }
