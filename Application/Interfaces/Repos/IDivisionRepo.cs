@@ -1,10 +1,13 @@
-﻿using Domain.Entities;
-using Domain.Entities.Dtos;
+﻿using Domain.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+
 namespace Application.Interfaces.Repos
 {
-    public interface IDivisionRepo:IGenericRepo<Division>
+    public interface IDivisionRepo : IGenericRepo<Division>
     {
-        Task<List<Divlist>> Get_Trainees_ManagersByDivID(int division);
     }
 }

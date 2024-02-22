@@ -6,12 +6,19 @@ namespace Application.Interfaces.UnitOfWork
 {
     public interface IUnitofWork : IDisposable
     {
-        IAdminRepo admins { get; }
-        IDevRepo devs { get; }
-        ITraineeRepo trainees { get; }
-        IDivisionRepo divs { get; }
+       
         IUserRepo users { get; }
-        IManagerRepo managers { get; }
+        IGenericRepo<Type> _Generic { get; }
+        public IChatRepo _chat { get; }
+        public ICommunityRepo community { get; }
+        public IChatRepo chat { get; }
+        public IUserChatRepo _uchat { get; }
+        public IMessageRepo message { get; }
+        public ITaskRepo tasks { get; }
+        public IRoleRepo role { get; }
+
+        public IPostRepo post { get; }
+       
         Task SaveChanges();
 
     }

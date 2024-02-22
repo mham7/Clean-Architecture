@@ -1,101 +1,21 @@
-﻿using Domain.Entities;
-using Domain.Entities.Dtos;
+﻿using API.Filters;
 using Application.Interfaces.Repos;
-using Application.Interfaces.UnitOfWork;
-using Application.Interfaces.Services;
-using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using Domain.Models;
+using Domain.Models.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata;
 
-namespace Contouring_App.Presentation.Controllers
+namespace API.Controllers
 {
-    [Route("api/[controller]"),Authorize]
+    [Route("api/[controller]")]
+    [ServiceFilter(typeof(ExceptionFilter))]
+    [ServiceFilter(typeof(ValidationFilter))]
     [ApiController]
-    public class DivisionController(IDivisionService divisionService) : ControllerBase
+    public class DivisionController : SuperController<Division, DivDto>
     {
-        private readonly IDivisionService _divisonService = divisionService;
-
-        [HttpGet("GetAll")]
-        public async Task<ActionResult<List<Division>>> GetAllDivs()
+        public DivisionController(IGenericServices<Division> gen, IMapper mapper) : base(gen, mapper)
         {
-            if (await _divisonService.GetAll() == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return Ok(await _divisonService.GetAll());
-            }
-        }
-
-
-        [HttpGet("GetEmployeeDivisions")]
-
-        public async Task<ActionResult<List<Divlist>>> GetEmpDivs(int div_id)
-        {
-           return await _divisonService.GetDivisionsAsync(div_id);
-        }
-        [HttpPost("Add")]
-
-        public async Task<ActionResult<Division>> AddDev(Division div)
-        {
-            if (div == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-               await _divisonService.Add(div);
-                return Ok(div);
-            }
-        }
-
-        [HttpDelete("Delete")]
-
-        public async Task<ActionResult<Division>> DeleteDiv(int id)
-        {
-            if (id != 0)
-            {
-                Division a = await _divisonService.GetById(id);
-                await _divisonService.Delete(a);
-                return Ok(a);
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
-
-
-        [HttpPut("Update")]
-
-        public ActionResult<Division> UpdateDiv(Division div)
-        {
-            try
-            {
-                _divisonService.Update(div);
-                return Ok(div);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Division>> GetDiv(int id)
-        {
-            Division a = await _divisonService.GetById(id);
-            if (a == null)
-            {
-                return NotFound(id);
-            }
-            else
-            {
-                return Ok(a);
-            }
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.Repos.Utlities;
-using Domain.Entities;
-using Domain.Entities.Dtos;
+using Domain.Models;
+using Domain.Models.Dtos;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -16,7 +16,7 @@ namespace Application.Services.Utilities
     public class Authenticator:IAuthenticator
     {
        
-        public Usercs HashUser(Usercs user)
+        public User HashUser(User user)
         {
             user.Password =BCrypt.Net.BCrypt.HashPassword(user.Password);
             return user;
@@ -28,7 +28,7 @@ namespace Application.Services.Utilities
             return isPasswordValid;
         }
 
-        public string Tokenization(Usercs user, IConfiguration _config,Userdto actualuser)
+        public string Tokenization(User user, IConfiguration _config,Userdto actualuser)
         {
             bool isvalid = Verification(actualuser.password, user.Password);
 
@@ -39,7 +39,7 @@ namespace Application.Services.Utilities
                 var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
                 List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier,user.Name)
+                new Claim(ClaimTypes.NameIdentifier,user.FirstName,user.LastName,user.Email),
             };
                 var token = new JwtSecurityToken(
                     claims: claims,
