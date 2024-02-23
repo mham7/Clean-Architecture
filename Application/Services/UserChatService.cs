@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Repos;
+using Application.Interfaces.Repos.Utlities;
 using Application.Interfaces.Services;
 using Application.Interfaces.UnitOfWork;
 using AutoMapper;
@@ -21,7 +22,10 @@ namespace Application.Services
         private readonly IMapper _Mapper;
         private readonly IUserService _user;
         private readonly IProfilePicService _profile;
-        public UserChatService(IGenericRepo<UserChat> gen, IChatService ChatService, IMessagingService Messaging, IUnitofWork Unit, IMapper mapper,IProfilePicService profile, IUserService user) : base(gen)
+        private readonly IAuthenticator _auth;
+        public UserChatService(IGenericRepo<UserChat> gen, IChatService ChatService, 
+            IMessagingService Messaging, IUnitofWork Unit, 
+            IMapper mapper,IProfilePicService profile, IUserService user, IAuthenticator auth) : base(gen)
         {
             _ChatService = ChatService;
             _Messaging = Messaging;
@@ -29,8 +33,10 @@ namespace Application.Services
             _Mapper = mapper;
             _user = user;
             _profile = profile;
+            _auth = auth;
 
         }
+
 
         public async Task<Message> Post(MessageDto messagedto)
         {
@@ -70,7 +76,7 @@ namespace Application.Services
                 {
                     User u = await _user.Get(item.RecieverId);
                     List<Message> msg = await _Messaging.GetInbox(item.ChatId);
-                    Message topMessage = msg.OrderBy(m => m.CreatedTime).FirstOrDefault();
+                    Message topMessage = msg.OrderByDescending(m => m.CreatedTime).FirstOrDefault();
                     //ProfilePic pic = await _profile.Get(id);
                     ChatDto chatDto = new ChatDto
                     {
@@ -106,6 +112,59 @@ namespace Application.Services
             }
             return chatDtos;
 
+        }
+
+        public async Task<List<Message>> Get(int userId, int chatId)
+        {
+            Expression<Func<UserChat, bool>> filter = u => (u.SenderId == userId && u.ChatId == chatId)
+            || (u.RecieverId == userId && u.ChatId == chatId);
+            UserChat uchat = await _Unit._uchat.Get(filter);
+            if (_auth.ChatVerification(uchat))
+            {
+                List<Message> msgs= await _Messaging.GetInbox(chatId);
+                msgs = msgs.OrderByDescending(m => m.CreatedTime).ToList();
+                return msgs;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public async Task<Message> Delete(int UserId,int MessageId)
+        {
+            Message msg = await _Messaging.Get(MessageId);
+            Expression<Func<UserChat, bool>> filter = u => (u.SenderId == UserId && u.ChatId == msg.ChatId);
+            UserChat uchat = await _Unit._uchat.Get(filter);
+            if(uchat != null)
+            {
+               await _Messaging.Delete(msg);
+                return msg;
+            }
+            else { return null; }
+            
+        }
+       public async Task<UserChat> Put(int ChatId, int UserId)
+        {
+            
+            Expression<Func<UserChat, bool>> filter = u => (u.SenderId == UserId && u.ChatId == ChatId)
+            || (u.RecieverId == UserId && u.ChatId == ChatId);
+            UserChat uchat = await _Unit._uchat.Get(filter);
+            if(uchat != null && uchat.SenderId==UserId)
+            {
+                uchat.SenderId = 0;
+                await Put(uchat);
+                return uchat;
+            }
+            else if(uchat != null && uchat.RecieverId == UserId)
+            {
+                uchat.RecieverId = 0;
+                await Put(uchat);
+                return uchat;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

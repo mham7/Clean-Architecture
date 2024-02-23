@@ -12,5 +12,6 @@ namespace Application.Interfaces.Services
     public interface IMessagingService:IGenericServices<Message>
     {
         Task<List<Message>> GetInbox(int Chatid);
+        Task<string> Patch(int id, string message);
     }
 }

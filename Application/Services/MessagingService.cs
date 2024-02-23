@@ -32,11 +32,26 @@ namespace Application.Services
 
         }
 
-       public async Task<List<Message>> GetInbox(int Chatid)
+        public  async Task<string> Patch(int id, string message)
+        {
+            Message msg= await _unit.message.Get(id);
+            msg.MessageDetail= message;
+            await _unit.message.Put(msg);
+            return msg.MessageDetail;
+
+        }
+        public async Task<List<Message>> GetInbox(int Chatid)
         {
             Expression<Func<Message, bool>> filter=u=>u.ChatId == Chatid;
             List<Message>a= await _messageRepo.Get(filter);
-            return a;
+            if (a != null)
+            {
+                return a;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

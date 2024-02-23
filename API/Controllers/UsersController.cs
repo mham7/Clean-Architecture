@@ -29,12 +29,7 @@ namespace Contouring_App.Presentation.Controllers
         }
 
 
-        [HttpGet("throw-exception")]
-        [AllowAnonymous]
-        public async Task ThrowException()
-        {
-            throw new ApplicationException("This is a test exception.");
-        }
+      
         [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<ActionResult<User>> Post([FromBody] Userdto div)
@@ -69,7 +64,7 @@ namespace Contouring_App.Presentation.Controllers
 
 
         [HttpGet("Details/{id}")]
-        public  async Task<ActionResult<User>>Get(int id)
+        public async Task<ActionResult<User>>Get(int id)
         {
             return await _userService.Get(id);
         }

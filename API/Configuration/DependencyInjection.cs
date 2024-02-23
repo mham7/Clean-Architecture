@@ -49,6 +49,7 @@ namespace API.DependencyInjection
             services.AddScoped<IProfilePicService, ProfilePicService>();
             services.AddScoped<IMessagingService, MessagingService>();
             services.AddAutoMapper(typeof(Program), typeof(MappingProfile));
+            services.AddTransient<IClaimsService, ClaimsService>();
             services.AddTransient<IMappers, Mappers>();
             return services;
         }

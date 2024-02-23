@@ -27,6 +27,15 @@ namespace Application.Services.Utilities
             user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
             return user;
         }
+
+        public bool ChatVerification(UserChat chat)
+        {
+            if(chat!=null)
+            {
+                return true;
+            }
+            return false;
+        }
         public bool Verification(string cred_password,string actual_password)
         {
 

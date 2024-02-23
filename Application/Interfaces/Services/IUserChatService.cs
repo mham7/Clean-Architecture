@@ -14,6 +14,9 @@ namespace Application.Interfaces.Services
     {
         Task<List<ChatDto>> GetInbox(int userId);
         Task<Message> Post(MessageDto messagedto);
+        Task<List<Message>> Get(int userId, int chatId);
+        Task<Message> Delete(int UserId, int MessageId);
+        Task<UserChat> Put(int chatid, int userid);
 
 
     }

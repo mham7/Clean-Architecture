@@ -1,6 +1,7 @@
 ﻿using API.Filters;
 using Application.Interfaces.Repos;
 using Application.Interfaces.Services;
+using Application.Interfaces.Services.Utlities;
 using Application.Services;
 using AutoMapper;
 using Domain.Models;
@@ -16,65 +17,72 @@ namespace API.Controllers
     [ValidationFilter]
     [GlobalExceptionFilter]
     [ApiController]
+    [Authorize]
     public class ChatController : SuperController<UserChat, UserChat>
     {
         private readonly IUserChatService _UserChatService;
         private readonly IMessagingService _MessagingService;
-        public ChatController(IGenericServices<UserChat> gen, IMapper mapper,IUserChatService userChatService, IMessagingService MessagingService) : base(gen, mapper)
+        private readonly IClaimsService _Claims;
+        public ChatController(IGenericServices<UserChat> gen, IMapper mapper,
+            IUserChatService userChatService, IMessagingService MessagingService,IClaimsService Claims) : base(gen, mapper)
         {
             _UserChatService = userChatService;
             _MessagingService = MessagingService;
+            _Claims = Claims;
         }
 
         //Send Message
         [HttpPost("Message")]
         public async Task<Message> Post(MessageDto dto)
         {
+            //dto.senderID = _Claims.GetUserID(User);
            return  await _UserChatService.Post(dto);
         }
 
         //Get All messages in a chat
         [HttpGet("Inbox/{id}")]
+        [Authorize]
         public async Task<List<Message>> GetChat(int id)
         {
-            return await _MessagingService.GetInbox(id);
+            int userId = _Claims.GetUserID(User);
+            return await _UserChatService.Get(userId, id);
+            
         }
 
         //Get Messenger list
         [HttpGet("Messenger")]
         [Authorize]
-        public async Task<List<ChatDto>> Get()
+        public new async Task<List<ChatDto>> Get()
         {
-            var userclaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            int userId = int.Parse(userclaim.Value);
-            
+            int userId = _Claims.GetUserID(User);
             return await _UserChatService.GetInbox(userId);
         }
 
-        //Deleting remove userid from uchat chat and messages, If 
-        [HttpDelete("{id}")]
+        //remove userchat from the user. The id is chatid
+        [HttpPut("UserChat/{id}")]
         [Authorize]
-        public override async Task<UserChat> Delete(int id)
+        public async Task<UserChat> Put(int id)
         {
-            return null; 
+            int userId = _Claims.GetUserID(User);
+           return await _UserChatService.Put(id,userId);
+     
         }
 
         //Deleting Messages
         [HttpDelete("Message/{id}")]
         [Authorize]
-        public async Task<string> Delete(int ChatId,int id)
+        public async Task<Message> DeleteMessage(int id)
         {
-            Message msg= await _MessagingService.Get(id);
-            await _MessagingService.Delete(msg);
-            return "Deleted";
+            int userId = _Claims.GetUserID(User);
+            return await _UserChatService.Delete(userId,id);
         }
 
         //Editing Message
         [HttpPatch("Message/{id}")]
         [Authorize]
-        public async Task<string> Patch(int id)
+        public async Task<string> Patch(int id,string message)
         {
-            return "z";
+           return await _MessagingService.Patch(id, message);
         }
     }
 }

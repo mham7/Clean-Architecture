@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Domain.Models.Dtos;
-using Domain.Models;
+
 
 
 namespace Application.Interfaces.Repos.Utlities
@@ -16,6 +16,7 @@ namespace Application.Interfaces.Repos.Utlities
         User HashUser(User user);
         Userdto HashUser(Userdto user);
         bool Verification(string cred_password, string actual_password);
+        public bool ChatVerification(UserChat chat);
         string Tokenization(User user, IConfiguration _config,Userdto actual);
     }
 }
