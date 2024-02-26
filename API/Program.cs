@@ -1,4 +1,6 @@
 using API.DependencyInjection;
+using Domain.Models;
+using MassTransit;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

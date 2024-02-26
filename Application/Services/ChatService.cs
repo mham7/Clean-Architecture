@@ -17,13 +17,13 @@ namespace Application.Services
         private readonly IUnitofWork _unit;
         private readonly IUserService _user;
         private readonly IProfilePicService _profile;
-        //private readonly IMessagingService _messaging;
+        
         public ChatService(IGenericRepo<Chats> gen, IUnitofWork unit, IUserService user,IProfilePicService profile) : base(gen)
         {
             _unit = unit;
             _user = user;
             _profile = profile;
-            //_messaging = messaging;
+           
         }
 
        

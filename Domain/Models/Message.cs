@@ -26,5 +26,13 @@ public partial class Message
 
     public bool? IsRead { get; set; }
 
-    
+    public static implicit operator Message(string v)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static implicit operator string(Message v)
+    {
+        throw new NotImplementedException();
+    }
 }

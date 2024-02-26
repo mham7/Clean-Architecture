@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Confluent.Kafka;
-using ServiceStack.Text;
+﻿using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure.Kafka
-{      public class KafkaConfig
+namespace Infrastructure.Configuration
+{
+    public class KafkaConfig
+    {
+        public static IConfiguration readConfig()
         {
-            public required string BootstrapServers { get; set; }
-            public required string ClientId { get; set; }
-            public SecurityProtocol SecurityProtocol { get; set; }
-
+            return new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddIniFile("client.properties", false)
+            .Build();
         }
-
-    
+    }
 }

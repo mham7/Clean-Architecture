@@ -18,6 +18,12 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using Infrastructure.Kafka;
+using Application.Services.Background;
+using MassTransit;
+using ServiceStack;
+using Domain.Models;
+using MassTransit.KafkaIntegration;
 
 namespace API.DependencyInjection
 {
@@ -26,14 +32,41 @@ namespace API.DependencyInjection
 
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
         {
-           services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
+            services.AddMassTransit(x =>
+            {
+                x.UsingInMemory();
+                x.AddRider(rider =>
+                {
+                    rider.AddConsumer<KafkaConsumer>();
+                    rider.UsingKafka((context, k) => { k.Host("pkc-4r087.us-west2.gcp.confluent.cloud:9092"); });
+                });
+            });
+
+            
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingInMemory();
+
+                x.AddRider(rider =>
+                {
+                    rider.AddProducer<Message>("u_chats");
+
+                    rider.UsingKafka((context, k) => { k.Host("pkc-4r087.us-west2.gcp.confluent.cloud:9092"); });
+                });
+            });
+
+
+            services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
            services.AddScoped<IUserRepo, UserRepo>();
+           services.AddScoped<IKafkaProducer, KafkaProducer>();
            services.AddScoped<IChatRepo, ChatRepo>();
            services.AddScoped<IUserChatRepo, UserChatRepo>();
            services.AddScoped<IMessageRepo, MessageRepo>();
            services.AddScoped<IUnitofWork, UnitofWork>();
            services.AddScoped<IDbConfiguration, DbConfiguration>();
            services.AddDbContext<AppDbContext>();
+           services.AddHostedService<BackgroundConsumer>();
 
             return services;
         }
